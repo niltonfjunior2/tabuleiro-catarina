@@ -53,7 +53,7 @@ export const App: React.FC = () => {
     newState.phase = 'playing';
     setGameState(newState);
     setHasSavedGame(false);
-    setNotification(`Vez de ${playerConfigs[0].name} jogar o dado! 🎲`);
+    setNotification(`Vez de ${playerConfigs[0].name}! Toque no dado para jogar! 🎲`);
   };
 
   // Retomar partida existente salva
@@ -62,12 +62,12 @@ export const App: React.FC = () => {
     if (saved) {
       soundService.unlock();
       setGameState(saved);
-      setNotification(`Partida retomada! Vez de ${saved.players[saved.activePlayerIndex]?.name}!`);
+      setNotification(`Partida retomada! Vez de ${saved.players[saved.activePlayerIndex]?.name}! 🎲`);
     }
   };
 
-  // Rolagem e caminhada passo a passo (hop step com áudio procedimental)
-  const handleRollDice = () => {
+  // Rolagem e caminhada passo a passo (hop step perfeitamente sincronizado com o dado)
+  const handleRollDice = (diceValue: number) => {
     if (gameState.isRolling || gameState.isMoving || !activePlayer || gameState.winner) {
       return;
     }
@@ -75,76 +75,84 @@ export const App: React.FC = () => {
     soundService.unlock();
     soundService.playDiceRollSound();
 
-    const diceValue = Math.floor(Math.random() * 6) + 1;
-    setGameState(prev => ({ ...prev, isRolling: true, lastDiceRoll: diceValue }));
+    setGameState(prev => ({ 
+      ...prev, 
+      isRolling: false, 
+      isMoving: true, 
+      lastDiceRoll: diceValue 
+    }));
+    setNotification(`🎲 ${activePlayer.name} tirou ${diceValue} no dado!`);
 
     // 1. Gera os passos físicos da caminhada
     const steps = generateMoveSteps(activePlayer.currentPosition, diceValue);
 
-    setTimeout(() => {
-      setGameState(prev => ({ ...prev, isRolling: false, isMoving: true }));
+    // 2. Animação passo a passo com som para cada casa (280ms)
+    let stepIdx = 0;
 
-      // 2. Animação passo a passo com som para cada casa (280ms)
-      let stepIdx = 0;
+    const stepInterval = setInterval(() => {
+      if (stepIdx < steps.length) {
+        const currentStep = steps[stepIdx];
+        soundService.playStepSound(stepIdx + 1);
 
-      const stepInterval = setInterval(() => {
-        if (stepIdx < steps.length) {
-          const currentStep = steps[stepIdx];
-          soundService.playStepSound(stepIdx + 1);
+        setGameState(prev => ({
+          ...prev,
+          players: prev.players.map((p, i) => 
+            i === prev.activePlayerIndex ? { ...p, currentPosition: currentStep.to } : p
+          )
+        }));
 
-          setGameState(prev => ({
-            ...prev,
-            players: prev.players.map((p, i) => 
-              i === prev.activePlayerIndex ? { ...p, currentPosition: currentStep.to } : p
-            )
-          }));
-          stepIdx++;
-        } else {
-          clearInterval(stepInterval);
+        setNotification(
+          `🐾 ${activePlayer.name} andando: casa ${currentStep.to} (${stepIdx + 1} de ${diceValue})`
+        );
+        stepIdx++;
+      } else {
+        clearInterval(stepInterval);
 
-          // 3. Conclui o movimento e processa regras de casas especiais / bate e volta
-          const { nextState, moveResult } = executeMove(gameState, diceValue);
+        // 3. Conclui o movimento e processa regras de casas especiais / bate e volta
+        const { nextState, moveResult } = executeMove(gameState, diceValue);
 
-          let message = `${activePlayer.name} andou ${diceValue} casas!`;
+        let message = `⭐ ${activePlayer.name} andou ${diceValue} casas e parou na casa ${moveResult.finalPosition}!`;
 
-          // Trata eventos especiais
-          if (moveResult.specialEvent) {
-            message = `${activePlayer.name}: ${moveResult.specialEvent.rule.title}!`;
-            
-            if (moveResult.specialEvent.rule.actionType === 'skip_turn') {
-              soundService.playCameraSound();
-            } else {
-              soundService.playSpecialEventSound();
-            }
-
-            // Exibe modal lúdico do evento especial
-            setActiveSpecialEvent({
-              event: moveResult.specialEvent,
-              playerName: activePlayer.name
-            });
+        // Trata eventos especiais
+        if (moveResult.specialEvent) {
+          message = `✨ ${activePlayer.name}: ${moveResult.specialEvent.rule.title}!`;
+          
+          if (moveResult.specialEvent.rule.actionType === 'skip_turn') {
+            soundService.playCameraSound();
+          } else {
+            soundService.playSpecialEventSound();
           }
 
-          if (moveResult.hasWon) {
-            message = `🎉 PARABÉNS, ${activePlayer.name} CHEGOU E VENCEU O JOGO! 🦄👑`;
-            storageService.clearSavedGame();
-          }
-
-          setNotification(message);
-          setGameState(nextState);
-
-          // 4. Passagem de turno (caso não haja modal de evento e não seja vitória)
-          if (!moveResult.hasWon && !moveResult.specialEvent) {
-            setTimeout(() => {
-              const { nextState: turnedState, skippedPlayerName } = advanceTurn(nextState);
-              if (skippedPlayerName) {
-                setNotification(`📸 ${skippedPlayerName} tirou foto com o unicórnio e descansou a rodada!`);
-              }
-              setGameState(turnedState);
-            }, 1200);
-          }
+          // Exibe modal lúdico do evento especial
+          setActiveSpecialEvent({
+            event: moveResult.specialEvent,
+            playerName: activePlayer.name
+          });
         }
-      }, 280);
-    }, 600);
+
+        if (moveResult.hasWon) {
+          message = `🎉 PARABÉNS, ${activePlayer.name} CHEGOU E VENCEU O JOGO! 🦄👑`;
+          storageService.clearSavedGame();
+        }
+
+        setNotification(message);
+        setGameState(nextState);
+
+        // 4. Passagem de turno (caso não haja modal de evento e não seja vitória)
+        if (!moveResult.hasWon && !moveResult.specialEvent) {
+          setTimeout(() => {
+            const { nextState: turnedState, skippedPlayerName } = advanceTurn(nextState);
+            if (skippedPlayerName) {
+              setNotification(`📸 ${skippedPlayerName} tirou foto com o unicórnio e descansou a rodada!`);
+            } else {
+              const nextPlayer = turnedState.players[turnedState.activePlayerIndex];
+              setNotification(`Vez de ${nextPlayer?.name}! Toque no dado! 🎲`);
+            }
+            setGameState(turnedState);
+          }, 1200);
+        }
+      }
+    }, 280);
   };
 
   // Dispensar modal de evento especial e passar o turno
@@ -155,6 +163,9 @@ export const App: React.FC = () => {
         const { nextState: turnedState, skippedPlayerName } = advanceTurn(gameState);
         if (skippedPlayerName) {
           setNotification(`📸 ${skippedPlayerName} tirou foto com o unicórnio e descansou a rodada!`);
+        } else {
+          const nextPlayer = turnedState.players[turnedState.activePlayerIndex];
+          setNotification(`Vez de ${nextPlayer?.name}! Toque no dado! 🎲`);
         }
         setGameState(turnedState);
       }, 400);
@@ -202,7 +213,7 @@ export const App: React.FC = () => {
 
       {/* Barra de Notificação Superior Lúdica */}
       {notification && !activeSpecialEvent && !gameState.winner && (
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg border-2 border-pink-300 text-xs sm:text-sm font-black text-pink-700 animate-slideDown flex items-center gap-2">
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg border-2 border-pink-300 text-xs sm:text-sm font-black text-pink-700 animate-slideDown flex items-center gap-2 max-w-[90vw] truncate">
           <span>{notification}</span>
         </div>
       )}
@@ -211,7 +222,7 @@ export const App: React.FC = () => {
       <div className="absolute top-2 left-2 z-40 flex items-center gap-2">
         <button
           onClick={handleRestart}
-          className="p-2 bg-white/80 hover:bg-white rounded-xl shadow-md border border-pink-200 text-xs font-bold text-pink-600 transition-all active:scale-95"
+          className="p-2 bg-white/90 hover:bg-white rounded-xl shadow-md border border-pink-200 text-xs font-bold text-pink-600 transition-all active:scale-95"
           title="Reiniciar Partida"
         >
           🔄 Reiniciar
@@ -220,10 +231,14 @@ export const App: React.FC = () => {
         {/* Botão para Calibrador de Coordenadas (Modo Dev) */}
         <button
           onClick={() => setShowCoordinatePicker(prev => !prev)}
-          className="p-2 bg-purple-100 hover:bg-purple-200 rounded-xl shadow-md border border-purple-300 text-[10px] font-black text-purple-700 transition-all active:scale-95"
+          className={`p-2 rounded-xl shadow-md border text-[10px] font-black transition-all active:scale-95 ${
+            showCoordinatePicker
+              ? 'bg-yellow-400 hover:bg-yellow-300 text-yellow-950 border-yellow-500 ring-2 ring-yellow-200'
+              : 'bg-purple-100 hover:bg-purple-200 text-purple-700 border-purple-300'
+          }`}
           title="Alternar Ferramenta de Calibração"
         >
-          🎯 Calibrador
+          {showCoordinatePicker ? '✖ Sair do Calibrador' : '🎯 Calibrador'}
         </button>
       </div>
 
@@ -235,7 +250,7 @@ export const App: React.FC = () => {
       {/* Área Central: Visualização do Tabuleiro Oficial */}
       <main className="flex-1 w-full h-full relative overflow-hidden flex items-center justify-center">
         {showCoordinatePicker ? (
-          <CoordinatePicker />
+          <CoordinatePicker onClose={() => setShowCoordinatePicker(false)} />
         ) : (
           <BoardView
             players={gameState.players}

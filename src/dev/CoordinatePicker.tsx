@@ -3,10 +3,12 @@ import { BoardCoordinate } from '../core/types';
 
 interface CoordinatePickerProps {
   imageSrc?: string;
+  onClose?: () => void;
 }
 
 export const CoordinatePicker: React.FC<CoordinatePickerProps> = ({ 
-  imageSrc = '/assets/tabuleiro.webp' 
+  imageSrc = '/assets/tabuleiro.webp',
+  onClose
 }) => {
   const [coords, setCoords] = useState<BoardCoordinate[]>([]);
   const [currentTile, setCurrentTile] = useState<number>(0);
@@ -33,34 +35,46 @@ export const CoordinatePicker: React.FC<CoordinatePickerProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-full bg-gray-900 text-white p-2 overflow-hidden text-xs">
-      <div className="flex items-center justify-between pb-2 border-b border-gray-700">
-        <div>
-          <span className="font-bold text-pink-400">Dev Tool: Coordinate Picker</span>
-          <span className="ml-3">
-            Próxima Casa a Calibrar: <strong className="text-yellow-300 text-sm">#{currentTile}</strong> 
+    <div className="flex flex-col h-full w-full bg-gray-900 text-white p-2 overflow-hidden text-xs">
+      {/* Barra Superior com padding à esquerda para não sobrepor os botões de controle */}
+      <div className="flex items-center justify-between pb-2 border-b border-gray-700 pl-48 sm:pl-56 pt-1">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="font-extrabold text-pink-400 bg-pink-950/60 px-2 py-0.5 rounded border border-pink-700">
+            Calibrador de Casas
+          </span>
+          <span className="text-gray-200">
+            Próxima Casa: <strong className="text-yellow-300 text-sm font-black">#{currentTile}</strong> 
             {currentTile === 0 ? ' (LARGADA)' : currentTile === 52 ? ' (CHEGADA)' : ''}
           </span>
         </div>
-        <div className="flex gap-2">
+
+        <div className="flex items-center gap-2">
           <button 
             onClick={() => setCurrentTile(Math.max(0, currentTile - 1))}
-            className="px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded"
+            className="px-2 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded font-bold"
           >
             ← Voltar
           </button>
           <button 
             onClick={() => setCurrentTile(Math.min(52, currentTile + 1))}
-            className="px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded"
+            className="px-2 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded font-bold"
           >
             Avançar →
           </button>
           <button 
             onClick={copyToClipboard}
-            className="px-3 py-1 bg-pink-600 hover:bg-pink-500 font-bold rounded"
+            className="px-3 py-1 bg-pink-600 hover:bg-pink-500 font-bold rounded shadow text-white"
           >
             Copiar JSON ({coords.length}/53)
           </button>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="px-2.5 py-1 bg-red-600 hover:bg-red-500 font-bold rounded shadow text-white"
+            >
+              ✖ Fechar
+            </button>
+          )}
         </div>
       </div>
 
