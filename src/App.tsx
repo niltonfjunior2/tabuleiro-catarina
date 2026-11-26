@@ -13,6 +13,7 @@ import { DiceControl } from './components/DiceControl';
 import { PlayerSetupModal } from './components/PlayerSetupModal';
 import { LandscapeGuard } from './components/LandscapeGuard';
 import { AudioControl } from './components/AudioControl';
+import { InstallPWAButton } from './components/InstallPWAButton';
 import { SpecialEventModal } from './components/SpecialEventModal';
 import { VictoryModal } from './components/VictoryModal';
 import { CoordinatePicker } from './dev/CoordinatePicker';
@@ -227,6 +228,9 @@ export const App: React.FC = () => {
         >
           🔄 Reiniciar
         </button>
+
+        {/* Botão para Instalar o PWA */}
+        <InstallPWAButton />
 
         {/* Botão para Calibrador de Coordenadas (Modo Dev) */}
         <button

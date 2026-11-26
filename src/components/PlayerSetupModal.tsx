@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PlayerColor, PlayerConfig } from '../core/types';
+import { InstallPWAButton } from './InstallPWAButton';
 
 interface PlayerSetupModalProps {
   onStartGame: (players: PlayerConfig[]) => void;
@@ -41,7 +42,10 @@ export const PlayerSetupModal: React.FC<PlayerSetupModalProps> = ({
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 select-none">
       <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-md w-full shadow-2xl border-4 border-pink-300 flex flex-col text-center animate-scaleUp">
         {/* Cabeçalho Festivo */}
-        <div className="text-4xl mb-1 animate-bounce">🦄✨</div>
+        <div className="flex items-center justify-between mb-1 px-1">
+          <div className="text-3xl animate-bounce">🦄✨</div>
+          <InstallPWAButton />
+        </div>
         <h2 className="text-xl sm:text-2xl font-black text-pink-600">
           Tabuleiro da Catarina
         </h2>
