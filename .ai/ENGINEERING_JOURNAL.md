@@ -94,3 +94,25 @@ Registro contínuo de aprendizados técnicos, restrições descobertas, débitos
 ### 3. Débitos Técnicos
 * **Status de Débitos Técnicos do Projeto:** **ZERO DÉBITOS PENDENTES ✓**
 * Todas as 4 Sprints foram entregues, todos os critérios de aceite do backlog foram atendidos e a esteira de CI/CD está 100% verde.
+
+---
+
+## REVISÃO E AJUSTES PÓS-HOMOLOGAÇÃO — SINCRONIZAÇÃO DO DADO E BOTÃO DE INSTALAÇÃO PWA
+
+### 1. Problemas Encontrados e Soluções
+* **Problema 1: Sorteio Duplicado e Dessincronia Visual do Dado**
+  * *Descrição:* O peão avançava um número de casas diferente do que aparecia desenhado na face do dado.
+  * *Causa:* O componente `DiceControl` sorteava números aleatórios para sua animação interna e, ao concluir, o `App.tsx` sorteava um segundo número aleatório independente para a movimentação física da peça. Além disso, o caractere Unicode original (`⚀`, etc.) era de difícil leitura em telas mobile.
+  * *Solução:* Centralização do sorteio no `DiceControl`, repassando o número definitivo via callback `onRoll(rolledNumber)` para o `App.tsx`. Redesenho completo da face do dado em formato de cubo físico com pontos reais (pips em grade 3x3) e um crachá numérico arábico de alta nitidez.
+* **Problema 2: Sobreposição na Barra de Ferramentas do Calibrador**
+  * *Descrição:* Ao acionar o calibrador, o texto da próxima casa ficava oculto sob os botões de ação do topo esquerdo.
+  * *Solução:* Inserção de espaçamento à esquerda (`pl-56 sm:pl-64`) e botão explícito de fechar no `CoordinatePicker`.
+* **Problema 3: Instalação Manual de PWA Não Intuitiva em Dispositivos Móveis**
+  * *Descrição:* Usuários comuns nem sempre conhecem o menu de três pontos do navegador para instalar um PWA, e no iOS Safari a API `beforeinstallprompt` inexiste.
+  * *Solução:* Criação do componente `InstallPWAButton` que captura `beforeinstallprompt` (Android/Desktop) e exibe guia visual ilustrado de 3 passos para Safari iOS. O botão se auto-oculta quando o app é aberto em modo standalone.
+
+### 2. Lições Aprendidas
+* Nunca realizar sorteios aleatórios de forma desacoplada entre a camada visual e o estado de domínio. O número do dado deve ser uma fonte única da verdade compartilhada diretamente com o loop de movimentação.
+
+### 3. Débitos Técnicos
+* **Status:** **ZERO DÉBITOS PENDENTES ✓** (Repositório limpo, 19/19 testes aprovados, build atualizado no GitHub).
