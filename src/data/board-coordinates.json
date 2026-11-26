@@ -1,0 +1,267 @@
+[
+  {
+    "tileNumber": 0,
+    "xPercent": 6.8,
+    "yPercent": 87.5
+  },
+  {
+    "tileNumber": 1,
+    "xPercent": 14.0,
+    "yPercent": 86.5
+  },
+  {
+    "tileNumber": 2,
+    "xPercent": 19.8,
+    "yPercent": 86.5
+  },
+  {
+    "tileNumber": 3,
+    "xPercent": 25.5,
+    "yPercent": 86.5
+  },
+  {
+    "tileNumber": 4,
+    "xPercent": 31.0,
+    "yPercent": 86.5
+  },
+  {
+    "tileNumber": 5,
+    "xPercent": 35.5,
+    "yPercent": 79.0
+  },
+  {
+    "tileNumber": 6,
+    "xPercent": 36.0,
+    "yPercent": 69.0
+  },
+  {
+    "tileNumber": 7,
+    "xPercent": 31.5,
+    "yPercent": 62.5
+  },
+  {
+    "tileNumber": 8,
+    "xPercent": 23.5,
+    "yPercent": 59.0
+  },
+  {
+    "tileNumber": 9,
+    "xPercent": 17.5,
+    "yPercent": 53.0
+  },
+  {
+    "tileNumber": 10,
+    "xPercent": 12.5,
+    "yPercent": 46.0
+  },
+  {
+    "tileNumber": 11,
+    "xPercent": 10.0,
+    "yPercent": 38.0
+  },
+  {
+    "tileNumber": 12,
+    "xPercent": 10.0,
+    "yPercent": 28.0
+  },
+  {
+    "tileNumber": 13,
+    "xPercent": 13.5,
+    "yPercent": 19.5
+  },
+  {
+    "tileNumber": 14,
+    "xPercent": 20.5,
+    "yPercent": 17.5
+  },
+  {
+    "tileNumber": 15,
+    "xPercent": 27.5,
+    "yPercent": 22.0
+  },
+  {
+    "tileNumber": 16,
+    "xPercent": 29.0,
+    "yPercent": 32.5
+  },
+  {
+    "tileNumber": 17,
+    "xPercent": 29.5,
+    "yPercent": 43.5
+  },
+  {
+    "tileNumber": 18,
+    "xPercent": 36.5,
+    "yPercent": 48.0
+  },
+  {
+    "tileNumber": 19,
+    "xPercent": 44.5,
+    "yPercent": 43.0
+  },
+  {
+    "tileNumber": 20,
+    "xPercent": 45.0,
+    "yPercent": 32.5
+  },
+  {
+    "tileNumber": 21,
+    "xPercent": 44.0,
+    "yPercent": 20.0
+  },
+  {
+    "tileNumber": 22,
+    "xPercent": 48.0,
+    "yPercent": 10.5
+  },
+  {
+    "tileNumber": 23,
+    "xPercent": 55.5,
+    "yPercent": 6.5
+  },
+  {
+    "tileNumber": 24,
+    "xPercent": 63.0,
+    "yPercent": 8.0
+  },
+  {
+    "tileNumber": 25,
+    "xPercent": 67.5,
+    "yPercent": 16.0
+  },
+  {
+    "tileNumber": 26,
+    "xPercent": 68.5,
+    "yPercent": 26.5
+  },
+  {
+    "tileNumber": 27,
+    "xPercent": 64.5,
+    "yPercent": 38.0
+  },
+  {
+    "tileNumber": 28,
+    "xPercent": 58.5,
+    "yPercent": 43.0
+  },
+  {
+    "tileNumber": 29,
+    "xPercent": 52.5,
+    "yPercent": 49.0
+  },
+  {
+    "tileNumber": 30,
+    "xPercent": 48.5,
+    "yPercent": 57.0
+  },
+  {
+    "tileNumber": 31,
+    "xPercent": 47.5,
+    "yPercent": 67.0
+  },
+  {
+    "tileNumber": 32,
+    "xPercent": 50.5,
+    "yPercent": 77.0
+  },
+  {
+    "tileNumber": 33,
+    "xPercent": 57.0,
+    "yPercent": 82.5
+  },
+  {
+    "tileNumber": 34,
+    "xPercent": 65.5,
+    "yPercent": 85.0
+  },
+  {
+    "tileNumber": 35,
+    "xPercent": 72.5,
+    "yPercent": 86.5
+  },
+  {
+    "tileNumber": 36,
+    "xPercent": 82.5,
+    "yPercent": 90.0
+  },
+  {
+    "tileNumber": 37,
+    "xPercent": 88.5,
+    "yPercent": 88.5
+  },
+  {
+    "tileNumber": 38,
+    "xPercent": 94.5,
+    "yPercent": 83.0
+  },
+  {
+    "tileNumber": 39,
+    "xPercent": 96.5,
+    "yPercent": 72.0
+  },
+  {
+    "tileNumber": 40,
+    "xPercent": 91.0,
+    "yPercent": 65.0
+  },
+  {
+    "tileNumber": 41,
+    "xPercent": 83.5,
+    "yPercent": 64.0
+  },
+  {
+    "tileNumber": 42,
+    "xPercent": 76.5,
+    "yPercent": 63.5
+  },
+  {
+    "tileNumber": 43,
+    "xPercent": 71.0,
+    "yPercent": 61.5
+  },
+  {
+    "tileNumber": 44,
+    "xPercent": 65.5,
+    "yPercent": 55.0
+  },
+  {
+    "tileNumber": 45,
+    "xPercent": 67.0,
+    "yPercent": 46.5
+  },
+  {
+    "tileNumber": 46,
+    "xPercent": 73.5,
+    "yPercent": 43.0
+  },
+  {
+    "tileNumber": 47,
+    "xPercent": 79.5,
+    "yPercent": 43.0
+  },
+  {
+    "tileNumber": 48,
+    "xPercent": 86.0,
+    "yPercent": 43.0
+  },
+  {
+    "tileNumber": 49,
+    "xPercent": 92.5,
+    "yPercent": 37.0
+  },
+  {
+    "tileNumber": 50,
+    "xPercent": 94.0,
+    "yPercent": 28.0
+  },
+  {
+    "tileNumber": 51,
+    "xPercent": 94.5,
+    "yPercent": 19.0
+  },
+  {
+    "tileNumber": 52,
+    "xPercent": 94.5,
+    "yPercent": 10.5
+  }
+]

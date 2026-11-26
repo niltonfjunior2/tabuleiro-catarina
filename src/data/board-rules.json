@@ -1,0 +1,42 @@
+[
+  {
+    "tileNumber": 9,
+    "title": "Melhores Amigos",
+    "description": "Você e seu unicórnio se tornaram melhores amigos! Avance 5 casas.",
+    "actionType": "advance",
+    "value": 5
+  },
+  {
+    "tileNumber": 13,
+    "title": "Sorte no Dado",
+    "description": "Se tirar número ímpar, avance 3 casas. Se tirar número par, volte 3 casas.",
+    "actionType": "roll_again_luck"
+  },
+  {
+    "tileNumber": 22,
+    "title": "Foto com Unicórnio",
+    "description": "Você parou para tirar uma foto com seu unicórnio. Fique uma rodada sem jogar!",
+    "actionType": "skip_turn"
+  },
+  {
+    "tileNumber": 29,
+    "title": "Soninho Revigorante",
+    "description": "Depois de um soninho revigorante, vá direto para a casa número 35.",
+    "actionType": "jump",
+    "value": 35
+  },
+  {
+    "tileNumber": 40,
+    "title": "Atalho",
+    "description": "Vocês acharam um atalho! Avance 4 casas!",
+    "actionType": "advance",
+    "value": 4
+  },
+  {
+    "tileNumber": 48,
+    "title": "Corrida para a Chegada",
+    "description": "O dia está lindo para uma corrida! Vá direto para a chegada!",
+    "actionType": "jump",
+    "value": 52
+  }
+]
