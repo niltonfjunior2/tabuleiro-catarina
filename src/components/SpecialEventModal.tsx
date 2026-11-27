@@ -24,8 +24,8 @@ export const SpecialEventModal: React.FC<SpecialEventModalProps> = ({
   const emoji = EVENT_EMOJIS[event.tileNumber] || '🦄✨';
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 select-none animate-fadeIn">
-      <div className="bg-white rounded-3xl p-5 sm:p-6 max-w-sm w-full text-center shadow-2xl border-4 border-pink-300 animate-bounceOnce flex flex-col items-center">
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 select-none overflow-y-auto animate-fadeIn">
+      <div className="bg-white rounded-3xl p-4 sm:p-5 max-w-sm w-full max-h-[92dvh] overflow-y-auto overscroll-contain my-auto text-center shadow-2xl border-4 border-pink-300 animate-bounceOnce flex flex-col items-center">
         {/* Ícone Gigante */}
         <div className="text-5xl sm:text-6xl mb-2 animate-bounce">
           {emoji}

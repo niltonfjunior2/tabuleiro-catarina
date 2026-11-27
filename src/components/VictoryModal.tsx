@@ -44,8 +44,8 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({ winner, onRestart })
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 select-none animate-fadeIn">
-      <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl border-4 border-yellow-300 animate-scaleUp flex flex-col items-center">
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-3 select-none overflow-y-auto animate-fadeIn">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-md w-full max-h-[92dvh] overflow-y-auto overscroll-contain my-auto text-center shadow-2xl border-4 border-yellow-300 animate-scaleUp flex flex-col items-center">
         {/* Coroa e Troféu */}
         <div className="text-6xl mb-2 animate-bounce">
           👑🦄🎉
