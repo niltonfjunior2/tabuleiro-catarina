@@ -14,6 +14,7 @@ import { PlayerSetupModal } from './components/PlayerSetupModal';
 import { LandscapeGuard } from './components/LandscapeGuard';
 import { AudioControl } from './components/AudioControl';
 import { InstallPWAButton } from './components/InstallPWAButton';
+import { FullscreenButton } from './components/FullscreenButton';
 import { SpecialEventModal } from './components/SpecialEventModal';
 import { VictoryModal } from './components/VictoryModal';
 import { CoordinatePicker } from './dev/CoordinatePicker';
@@ -182,7 +183,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-pink-100 flex flex-col select-none">
+    <div className="relative w-full h-[100dvh] max-h-[100dvh] overflow-hidden bg-pink-100 flex flex-col select-none pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]">
       {/* Alerta de Modo Paisagem para Celulares e Tablets */}
       <LandscapeGuard />
 
@@ -231,6 +232,9 @@ export const App: React.FC = () => {
 
         {/* Botão para Instalar o PWA */}
         <InstallPWAButton />
+
+        {/* Botão de Tela Cheia para Navegadores Web */}
+        <FullscreenButton />
 
         {/* Botão para Calibrador de Coordenadas (Modo Dev) */}
         <button

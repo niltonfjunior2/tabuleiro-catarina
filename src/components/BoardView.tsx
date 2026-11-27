@@ -18,17 +18,21 @@ export const BoardView: React.FC<BoardViewProps> = ({
   coordinates.forEach(c => coordMap.set(c.tileNumber, c));
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center p-1 sm:p-2 overflow-hidden bg-pink-100">
-      {/* Container com Aspect Ratio da imagem oficial (3543 x 2480 ~ 1.428) */}
+    <div className="relative w-full h-full flex items-center justify-center p-1 sm:p-2 box-border overflow-hidden bg-pink-100">
+      {/* Container com Aspect Ratio estrito 3543:2480 adaptado dinamicamente para nunca vazar nem cortar */}
       <div 
-        className="relative max-h-full max-w-full aspect-[3543/2480] shadow-2xl rounded-2xl overflow-hidden border-2 border-pink-300 bg-white"
-        style={{ width: 'auto', height: '100%' }}
+        className="relative aspect-[3543/2480] shadow-2xl rounded-2xl overflow-hidden border-2 border-pink-300 bg-white flex items-center justify-center"
+        style={{
+          width: 'min(100%, calc((100dvh - 16px) * 3543 / 2480))',
+          maxHeight: '100%',
+          maxWidth: '100%'
+        }}
       >
-        {/* Imagem de Fundo Oficial em WebP Retina */}
+        {/* Imagem de Fundo Oficial em WebP Retina com contain para visibilidade integral */}
         <img
           src="/assets/tabuleiro.webp"
           alt="Tabuleiro Catarina 5 Anos"
-          className="w-full h-full object-cover select-none pointer-events-none"
+          className="w-full h-full object-contain select-none pointer-events-none"
           draggable={false}
         />
 
