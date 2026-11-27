@@ -88,8 +88,13 @@ export const DiceControl: React.FC<DiceControlProps> = ({
   const [displayRoll, setDisplayRoll] = useState<number>(lastRoll ?? 1);
   const [animatingSpin, setAnimatingSpin] = useState<boolean>(false);
 
-  const isDisabled = isRolling || isMoving || animatingSpin || isCooldown;
+  const isWaiting = isRolling || isMoving || Boolean(isCooldown);
+  const isDisabled = isWaiting || animatingSpin;
   const accent = COLOR_ACCENTS[activePlayer.color] || COLOR_ACCENTS.pink;
+
+  // Em modo "Aguarde", o dado fica em tons de cinza; volta à cor do jogador quando liberado
+  const diceBg = isWaiting ? 'from-gray-300 via-gray-400 to-gray-500' : accent.bg;
+  const dotColor = isWaiting ? 'bg-gray-600' : accent.dot;
 
   // Sincroniza se o estado pai atualizar o lastRoll
   useEffect(() => {
@@ -138,12 +143,12 @@ export const DiceControl: React.FC<DiceControlProps> = ({
       <button
         onClick={handleClick}
         disabled={isDisabled}
-        className={`p-1.5 rounded-2xl bg-gradient-to-br ${accent.bg} shadow-lg transition-transform active:scale-95 disabled:opacity-90 disabled:pointer-events-none select-none relative group flex flex-col items-center gap-1`}
-        title={isCooldown || isMoving ? 'Aguarde a sua vez...' : 'Toque para jogar o dado!'}
+        className={`p-1.5 rounded-2xl bg-gradient-to-br ${diceBg} shadow-lg transition-all duration-300 active:scale-95 disabled:pointer-events-none select-none relative group flex flex-col items-center gap-1`}
+        title={isWaiting ? 'Aguarde a sua vez...' : 'Toque para jogar o dado!'}
       >
         {/* Face do Dado com Pips Reais */}
         <div className={`transform transition-transform ${animatingSpin ? 'rotate-12 scale-105' : ''}`}>
-          <DiceFaceVisual value={displayRoll} dotClass={accent.dot} />
+          <DiceFaceVisual value={displayRoll} dotClass={dotColor} />
         </div>
 
         {/* Indicador Numérico Grande e Nítido para a Criança (Sempre Visível) */}
