@@ -1,7 +1,7 @@
-# PROJECT DNA — TABULEIRO CATARINA 5 ANOS
+# PROJECT DNA — CAT NO REINO DOS UNICÓRNIOS
 
 ## 1. Visão do Projeto
-O **Tabuleiro Catarina 5 Anos** é uma aplicação web progressiva (PWA) interativa, mobile-first e 100% offline-first, criada especificamente para ser a atração lúdica do aniversário de 5 anos da Catarina. Trata-se de uma digitalização fiel e imersiva do jogo de tabuleiro físico temático de unicórnios, permitindo que até 4 participantes (crianças e familiares) joguem presencialmente no mesmo dispositivo (celular ou tablet), compartilhando a tela em modo paisagem (*pass-and-play*). O jogo guia as crianças com automação 100% visual, efeitos sonoros amigáveis, trilha musical relaxante e celebração com fogos de artifício na vitória.
+O **Cat no Reino dos Unicórnios** é uma aplicação web progressiva (PWA) interativa, mobile-first e 100% offline-first. Trata-se de uma digitalização fiel e imersiva do jogo de tabuleiro físico temático de unicórnios, permitindo que até 4 participantes (crianças e familiares) joguem presencialmente no mesmo dispositivo (celular ou tablet), compartilhando a tela em modo paisagem (*pass-and-play*). O jogo guia as crianças com automação 100% visual, efeitos sonoros amigáveis, trilha musical relaxante e celebração com fogos de artifício na vitória.
 
 ---
 

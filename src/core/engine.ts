@@ -15,7 +15,7 @@ export const TOTAL_TILES = 51;
 export const FINISH_POSITION = 52;
 
 export const DEFAULT_PLAYER_CONFIGS: PlayerConfig[] = [
-  { id: 1, name: 'Catarina', color: 'pink' },
+  { id: 1, name: 'Cat', color: 'pink' },
   { id: 2, name: 'Amigo 1', color: 'purple' },
   { id: 3, name: 'Amigo 2', color: 'yellow' },
   { id: 4, name: 'Amigo 3', color: 'cyan' },

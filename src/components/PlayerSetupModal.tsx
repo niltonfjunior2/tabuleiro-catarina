@@ -9,7 +9,7 @@ interface PlayerSetupModalProps {
 }
 
 const DEFAULT_PLAYERS: PlayerConfig[] = [
-  { id: 1, name: 'Catarina', color: 'pink' },
+  { id: 1, name: 'Cat', color: 'pink' },
   { id: 2, name: 'Amigo 1', color: 'purple' },
   { id: 3, name: 'Amigo 2', color: 'yellow' },
   { id: 4, name: 'Amigo 3', color: 'cyan' },
@@ -47,7 +47,7 @@ export const PlayerSetupModal: React.FC<PlayerSetupModalProps> = ({
           <InstallPWAButton />
         </div>
         <h2 className="text-lg sm:text-2xl font-black text-pink-600 leading-tight">
-          Tabuleiro da Catarina
+          Cat no Reino dos Unicórnios
         </h2>
         <p className="text-[11px] sm:text-xs text-gray-500 mb-2 font-medium">
           Aniversário de 5 Anos no Reino dos Unicórnios!

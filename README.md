@@ -1,6 +1,6 @@
-# Tabuleiro Catarina 5 Anos
+# Cat no Reino dos Unicórnios
 
-Aplicação Web Progressiva (PWA) interativa, mobile-first e 100% offline-first criada para comemorar o aniversário de 5 anos da Catarina. Reproduz digitalmente o jogo de tabuleiro de unicórnios com até 4 participantes no mesmo dispositivo (*pass-and-play*).
+Aplicação Web Progressiva (PWA) interativa, mobile-first e 100% offline-first. Reproduz digitalmente o jogo de tabuleiro de unicórnios com até 4 participantes no mesmo dispositivo (*pass-and-play*).
 
 ---
 

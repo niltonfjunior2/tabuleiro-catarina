@@ -31,7 +31,7 @@ export const LandscapeGuard: React.FC = () => {
         Gire o aparelho de lado!
       </h2>
       <p className="text-base md:text-lg max-w-sm text-pink-100 font-medium">
-        Para ver o tabuleiro completo e mágico da <strong>Catarina</strong>, por favor utilize seu celular ou tablet no <strong>Modo Paisagem (Horizontal)</strong>.
+        Para entrar no mundo mágico de <strong>Cat no Reino dos Unicórnios</strong>, por favor utilize seu celular ou tablet no <strong>Modo Paisagem (Horizontal)</strong>.
       </p>
     </div>
   );

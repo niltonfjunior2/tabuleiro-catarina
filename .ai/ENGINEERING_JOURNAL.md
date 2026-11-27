@@ -139,4 +139,22 @@ Registro contínuo de aprendizados técnicos, restrições descobertas, débitos
 * Em interfaces de jogos mobile orientados a landscape, nunca utilizar posicionamentos flutuantes `absolute` que compartilhem a mesma área que o canvas/tabuleiro. Um layout estruturado em cabeçalho superior (`header`), palco central (`main`) e dock lateral (`aside`) garante isolamento geométrico absoluto contra qualquer sobreposição, independentemente da proporção de tela do dispositivo.
 
 ### 3. Débitos Técnicos
+* **Status:** **ZERO DÉBITOS PENDENTES ✓**
+
+---
+
+## MANUTENÇÃO CONTÍNUA (RAG) — RE-BRANDING E ATUALIZAÇÃO FORÇADA DE INSTALAÇÕES PWA
+
+### 1. Problemas Encontrados e Soluções
+* **Problema 1: Atualização de Nomenclatura Oficial da Marca**
+  * *Descrição:* A nomenclatura oficial do jogo e dos seus metadados de instalação precisava ser alterada de "Tabuleiro Catarina 5 Anos" para "Cat no Reino dos Unicórnios".
+  * *Solução:* Atualização de `<title>`, meta tags (`application-name`, `apple-mobile-web-app-title`), manifesto PWA (`name`, `short_name`), título do modal inicial, mensagem de alerta de rotação de tela, tela de vitória e nome padrão do primeiro peão (`Cat`).
+* **Problema 2: Propagação de Atualização para Dispositivos com PWA Já Instalado**
+  * *Descrição:* Aparelhos que já haviam instalado o PWA poderiam demorar para refletir o novo nome e as novas configurações devido ao ciclo passivo do navegador (até 24 horas para checagem de Service Worker).
+  * *Solução:* Configuração do Workbox com `cleanupOutdatedCaches: true`, `clientsClaim: true` e `skipWaiting: true` no `vite.config.ts`, combinada com um trigger imperativo em `src/main.tsx` que executa `registration.update()` no arranque e recarrega a página ao disparar `controllerchange`.
+
+### 2. Lições Aprendidas
+* Disparar `registration.update()` no ciclo inicial de inicialização (`navigator.serviceWorker.ready`) assegura que o navegador consulte o servidor imediatamente em busca de novas versões do `sw.js` e do `manifest.webmanifest`, permitindo atualizações de PWA quase instantâneas.
+
+### 3. Débitos Técnicos
 * **Status:** **ZERO DÉBITOS PENDENTES ✓** (Repositório limpo, 19/19 testes aprovados, build atualizado no GitHub).

@@ -33,7 +33,7 @@ export const BoardView: React.FC<BoardViewProps> = ({
         {/* Imagem de Fundo Oficial em WebP Retina com contain para visibilidade integral */}
         <img
           src="/assets/tabuleiro.webp"
-          alt="Tabuleiro Catarina 5 Anos"
+          alt="Cat no Reino dos Unicórnios"
           className="w-full h-full object-contain select-none pointer-events-none"
           draggable={false}
         />

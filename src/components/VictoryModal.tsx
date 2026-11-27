@@ -60,7 +60,7 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({ winner, onRestart })
         </p>
 
         <p className="text-xs sm:text-sm text-gray-600 mb-6 font-medium">
-          Você completou a jornada mágica dos unicórnios no aniversário de 5 anos da Catarina! ✨
+          Você completou a jornada mágica em Cat no Reino dos Unicórnios! ✨
         </p>
 
         <button

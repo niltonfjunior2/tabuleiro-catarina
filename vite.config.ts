@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['assets/**/*', 'favicon.ico'],
       manifest: {
-        name: 'Tabuleiro Catarina 5 Anos',
-        short_name: 'Catarina 5 Anos',
-        description: 'Jogo de tabuleiro digital dos unicórnios para o aniversário de 5 anos da Catarina',
+        name: 'Cat no Reino dos Unicórnios',
+        short_name: 'Cat no Reino dos Unicórnios',
+        description: 'Cat no Reino dos Unicórnios - Jogo de tabuleiro digital dos unicórnios',
         theme_color: '#ec4899',
         background_color: '#fdf2f8',
         display: 'standalone',
@@ -32,7 +32,10 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,jpg,webp,svg,mp3,json}']
+        globPatterns: ['**/*.{js,css,html,ico,png,jpg,webp,svg,mp3,json}'],
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true
       }
     })
   ],

@@ -12,9 +12,9 @@ import {
 } from '../engine';
 import { PlayerConfig } from '../types';
 
-describe('GameEngine - Tabuleiro Catarina 5 Anos', () => {
+describe('GameEngine - Cat no Reino dos Unicórnios', () => {
   const customPlayers: PlayerConfig[] = [
-    { id: 1, name: 'Catarina', color: 'pink' },
+    { id: 1, name: 'Cat', color: 'pink' },
     { id: 2, name: 'Helena', color: 'purple' },
     { id: 3, name: 'Lucas', color: 'yellow' }
   ];
@@ -168,7 +168,7 @@ describe('GameEngine - Tabuleiro Catarina 5 Anos', () => {
 
       // Quando voltaria para o Jogador 1 (que está suspenso): o sistema deve pular o Jogador 1 e passar direto para o Jogador 2!
       const skippedTurn = advanceTurn(turnP3);
-      expect(skippedTurn.skippedPlayerName).toBe('Catarina');
+      expect(skippedTurn.skippedPlayerName).toBe('Cat');
       expect(skippedTurn.nextState.players[0].skipNextTurn).toBe(false); // penalidade consumida
       expect(skippedTurn.nextState.activePlayerIndex).toBe(1); // passou para Helena
     });
@@ -183,7 +183,7 @@ describe('GameEngine - Tabuleiro Catarina 5 Anos', () => {
       expect(nextState.players[0].currentPosition).toBe(FINISH_POSITION);
       expect(nextState.players[0].hasWon).toBe(true);
       expect(nextState.phase).toBe('celebration');
-      expect(nextState.winner?.name).toBe('Catarina');
+      expect(nextState.winner?.name).toBe('Cat');
     });
   });
 });
