@@ -17,6 +17,7 @@ import { InstallPWAButton } from './components/InstallPWAButton';
 import { FullscreenButton } from './components/FullscreenButton';
 import { SpecialEventModal } from './components/SpecialEventModal';
 import { VictoryModal } from './components/VictoryModal';
+import { AboutModal } from './components/AboutModal';
 import { CoordinatePicker } from './dev/CoordinatePicker';
 import { soundService } from './services/soundService';
 import { storageService } from './services/storageService';
@@ -27,6 +28,7 @@ export const App: React.FC = () => {
   const [notification, setNotification] = useState<string | null>(null);
   const [activeSpecialEvent, setActiveSpecialEvent] = useState<{ event: SpecialEventOccurrence; playerName: string } | null>(null);
   const [showCoordinatePicker, setShowCoordinatePicker] = useState<boolean>(false);
+  const [showAboutModal, setShowAboutModal] = useState<boolean>(false);
   const [hasSavedGame, setHasSavedGame] = useState<boolean>(false);
 
   // Inicializa auto-reacquire do Wake Lock e checa se há save no localStorage
@@ -213,6 +215,11 @@ export const App: React.FC = () => {
         />
       )}
 
+      {/* Modal Sobre, Termos de Uso e Privacidade com Foto do Vovô */}
+      {showAboutModal && (
+        <AboutModal onClose={() => setShowAboutModal(false)} />
+      )}
+
       {/* Barra Superior Dedicada (Header): Controles e Notificações sem Sobrepor o Tabuleiro */}
       <header className="w-full h-8 sm:h-9 px-2 shrink-0 bg-pink-200/60 backdrop-blur-sm border-b border-pink-300/60 flex items-center justify-between gap-1 sm:gap-2 z-30">
         {/* Botões de Ação Auxiliares no Topo Esquerdo */}
@@ -256,9 +263,16 @@ export const App: React.FC = () => {
           )}
         </div>
 
-        {/* Controle de Áudio no Topo Direito */}
-        <div className="shrink-0 flex items-center">
+        {/* Controle de Áudio e Informações no Topo Direito */}
+        <div className="shrink-0 flex items-center gap-1 sm:gap-1.5">
           <AudioControl />
+          <button
+            onClick={() => setShowAboutModal(true)}
+            className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-white/90 hover:bg-white text-pink-600 font-black text-xs border border-pink-200 shadow-sm flex items-center justify-center transition-all active:scale-95"
+            title="Sobre o Jogo, Termos de Uso e Privacidade"
+          >
+            ?
+          </button>
         </div>
       </header>
 

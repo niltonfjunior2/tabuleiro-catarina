@@ -178,4 +178,19 @@ Registro contínuo de aprendizados técnicos, restrições descobertas, débitos
 * Combinar query parameters (`?install=1`) com a verificação de `window.matchMedia('(display-mode: standalone)')` permite criar experiências de recepção diferenciadas para novos visitantes vindos de QR Codes físicos, sem interferir na experiência de quem já joga com o app instalado.
 
 ### 3. Débitos Técnicos
+* **Status:** **ZERO DÉBITOS PENDENTES ✓**
+
+---
+
+## MANUTENÇÃO CONTÍNUA (RAG) — MÓDULO SOBRE, TERMOS DE USO & HOMENAGEM DO VOVÔ NILTON
+
+### 1. Problemas Encontrados e Soluções
+* **Problema 1: Inclusão Discreta de Autoria Afetiva e Termos Mágicos**
+  * *Descrição:* Necessidade de eternizar que o jogo é um presente criado com amor pelo Vovô Nilton para a Catarina, acompanhado de termos de uso e privacidade leves e divertidos, sem poluir a interface visual de jogo das crianças.
+  * *Solução:* Criação do componente `AboutModal.tsx` com foto redonda do Vovô Nilton (`public/assets/vovo.jpeg`), termos lúdicos de consentimento dos unicórnios, garantia de privacidade total offline e botão discreto `?` no canto superior direito do cabeçalho.
+
+### 2. Lições Aprendidas
+* Projetos afetivos com forte valor emocional ganham imensa personalidade quando as informações institucionais/termos são convertidas em storytelling lúdico integrado à temática mágica do jogo.
+
+### 3. Débitos Técnicos
 * **Status:** **ZERO DÉBITOS PENDENTES ✓** (Repositório limpo, 19/19 testes aprovados, build atualizado no GitHub).
