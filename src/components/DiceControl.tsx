@@ -5,8 +5,10 @@ interface DiceControlProps {
   activePlayer: Player;
   isRolling: boolean;
   isMoving: boolean;
+  isCooldown?: boolean;
   lastRoll: number | null;
   onRoll: (rolledNumber: number) => void;
+  onRollRequest?: () => number;
 }
 
 const COLOR_ACCENTS: Record<string, { bg: string; text: string; dot: string; border: string }> = {
@@ -78,13 +80,15 @@ export const DiceControl: React.FC<DiceControlProps> = ({
   activePlayer,
   isRolling,
   isMoving,
+  isCooldown = false,
   lastRoll,
-  onRoll
+  onRoll,
+  onRollRequest
 }) => {
   const [displayRoll, setDisplayRoll] = useState<number>(lastRoll ?? 1);
   const [animatingSpin, setAnimatingSpin] = useState<boolean>(false);
 
-  const isDisabled = isRolling || isMoving || animatingSpin;
+  const isDisabled = isRolling || isMoving || animatingSpin || isCooldown;
   const accent = COLOR_ACCENTS[activePlayer.color] || COLOR_ACCENTS.pink;
 
   // Sincroniza se o estado pai atualizar o lastRoll
@@ -97,8 +101,8 @@ export const DiceControl: React.FC<DiceControlProps> = ({
   const handleClick = () => {
     if (isDisabled) return;
 
-    // 1. Sorteia o número definitivo que SERÁ usado na rodada
-    const definitiveRoll = Math.floor(Math.random() * 6) + 1;
+    // 1. Sorteia o número definitivo que SERÁ usado na rodada (respeitando regra anti-estagnação)
+    const definitiveRoll = onRollRequest ? onRollRequest() : Math.floor(Math.random() * 6) + 1;
     setAnimatingSpin(true);
 
     // 2. Animação de suspense girando as faces (6 passos rápidos)
@@ -134,9 +138,19 @@ export const DiceControl: React.FC<DiceControlProps> = ({
       <button
         onClick={handleClick}
         disabled={isDisabled}
-        className={`p-1.5 rounded-2xl bg-gradient-to-br ${accent.bg} shadow-lg transition-transform active:scale-95 disabled:opacity-85 disabled:pointer-events-none select-none relative group flex flex-col items-center gap-1`}
-        title="Toque para jogar o dado!"
+        className={`p-1.5 rounded-2xl bg-gradient-to-br ${accent.bg} shadow-lg transition-transform active:scale-95 disabled:opacity-85 disabled:pointer-events-none select-none relative group flex flex-col items-center gap-1 overflow-hidden`}
+        title={isCooldown || isMoving ? 'Aguarde a sua vez...' : 'Toque para jogar o dado!'}
       >
+        {/* Overlay "Aguarde" quando em movimento ou em delay de 2s */}
+        {(isCooldown || isMoving) && (
+          <div className="absolute inset-0 bg-black/65 backdrop-blur-[2px] rounded-2xl flex flex-col items-center justify-center text-white z-20 animate-fadeIn pointer-events-none">
+            <span className="text-base sm:text-lg animate-bounce">⏳</span>
+            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-yellow-300 drop-shadow">
+              Aguarde
+            </span>
+          </div>
+        )}
+
         {/* Face do Dado com Pips Reais */}
         <div className={`transform transition-transform ${animatingSpin ? 'rotate-12 scale-105' : ''}`}>
           <DiceFaceVisual value={displayRoll} dotClass={accent.dot} />
@@ -156,8 +170,9 @@ export const DiceControl: React.FC<DiceControlProps> = ({
         )}
       </button>
 
-      <span className="text-[8px] text-gray-400 font-bold text-center leading-tight">
-        Rolar 🎲
+      {/* Rótulo inferior de status */}
+      <span className={`text-[8px] font-bold text-center leading-tight ${isCooldown || isMoving ? 'text-amber-600 font-black' : 'text-gray-400'}`}>
+        {isCooldown || isMoving ? '⏳ Aguarde' : 'Rolar 🎲'}
       </span>
     </div>
   );

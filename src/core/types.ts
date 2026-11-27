@@ -78,4 +78,5 @@ export interface GameState {
   isMoving: boolean;
   lastMoveResult: MoveResult | null;
   winner: Player | null;
+  failedFinishAttempts: number;
 }

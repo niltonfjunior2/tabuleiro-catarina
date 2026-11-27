@@ -7,6 +7,7 @@ import {
   calculateTileOffsets,
   executeMove,
   advanceTurn,
+  determineNextRollValue,
   START_POSITION,
   FINISH_POSITION
 } from '../engine';
@@ -184,6 +185,69 @@ describe('GameEngine - Cat no Reino dos Unicórnios', () => {
       expect(nextState.players[0].hasWon).toBe(true);
       expect(nextState.phase).toBe('celebration');
       expect(nextState.winner?.name).toBe('Cat');
+    });
+  });
+
+  describe('Regra Oculta Anti-Estagnação na Reta Final (Mercy Rule)', () => {
+    it('deve contabilizar tentativas frustradas quando jogador na reta final (>= 47) sofre ricochete', () => {
+      const state = createInitialGameState(customPlayers);
+      state.players[0].currentPosition = 50; // precisa de 2 para vencer
+
+      // Jogador tira 4 (bate e volta: 50 -> 52 -> 50)
+      const { nextState } = executeMove(state, 4);
+      expect(nextState.players[0].currentPosition).toBe(50);
+      expect(nextState.failedFinishAttempts).toBe(1);
+    });
+
+    it('não deve contabilizar tentativas frustradas se o jogador ainda estiver longe da chegada (< 47)', () => {
+      const state = createInitialGameState(customPlayers);
+      state.players[0].currentPosition = 30;
+
+      const { nextState } = executeMove(state, 4);
+      expect(nextState.players[0].currentPosition).toBe(34);
+      expect(nextState.failedFinishAttempts).toBe(0);
+    });
+
+    it('deve forçar o valor exato para vitória após 5 tentativas frustradas se o jogador estiver a 5 casas ou menos da meta', () => {
+      const state = createInitialGameState(customPlayers);
+      state.failedFinishAttempts = 5;
+
+      // Jogador na casa 50 (distância 2)
+      state.players[0].currentPosition = 50;
+      expect(determineNextRollValue(state)).toBe(2);
+
+      // Jogador na casa 48 (distância 4)
+      state.players[0].currentPosition = 48;
+      expect(determineNextRollValue(state)).toBe(4);
+
+      // Jogador na casa 47 (distância 5)
+      state.players[0].currentPosition = 47;
+      expect(determineNextRollValue(state)).toBe(5);
+
+      // Jogador na casa 51 (distância 1)
+      state.players[0].currentPosition = 51;
+      expect(determineNextRollValue(state)).toBe(1);
+    });
+
+    it('não deve forçar vitória se o jogador estiver a mais de 5 casas da chegada mesmo com 5 tentativas frustradas acumuladas', () => {
+      const state = createInitialGameState(customPlayers);
+      state.failedFinishAttempts = 5;
+      state.players[0].currentPosition = 40; // distância 12 (> 5)
+
+      const roll = determineNextRollValue(state);
+      expect(roll).toBeGreaterThanOrEqual(1);
+      expect(roll).toBeLessThanOrEqual(6);
+    });
+
+    it('deve resetar o contador de tentativas frustradas para 0 quando qualquer jogador vence', () => {
+      const state = createInitialGameState(customPlayers);
+      state.failedFinishAttempts = 5;
+      state.players[0].currentPosition = 50;
+
+      // Executa o movimento vencedor
+      const { nextState } = executeMove(state, 2);
+      expect(nextState.players[0].hasWon).toBe(true);
+      expect(nextState.failedFinishAttempts).toBe(0);
     });
   });
 });

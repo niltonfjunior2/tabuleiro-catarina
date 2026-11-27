@@ -13,6 +13,8 @@ import defaultRules from '../data/board-rules.json';
 export const START_POSITION = 0;
 export const TOTAL_TILES = 51;
 export const FINISH_POSITION = 52;
+export const FINAL_STRETCH_THRESHOLD = 47; // 5 casas ou menos da Chegada (52 - 5 = 47)
+export const MAX_FAILED_FINISH_ATTEMPTS = 5;
 
 export const DEFAULT_PLAYER_CONFIGS: PlayerConfig[] = [
   { id: 1, name: 'Cat', color: 'pink' },
@@ -44,8 +46,35 @@ export function createInitialGameState(configs: PlayerConfig[] = DEFAULT_PLAYER_
     isRolling: false,
     isMoving: false,
     lastMoveResult: null,
-    winner: null
+    winner: null,
+    failedFinishAttempts: 0
   };
+}
+
+/**
+ * Determina o valor a ser rolado no dado.
+ * Implementa a regra oculta de anti-estagnação:
+ * Se houver 5 ou mais tentativas frustradas na reta final (>= 47),
+ * e o jogador da vez estiver a 5 casas ou menos da chegada (<= 5 de distância),
+ * entrega o valor exato necessário para consagrar a vitória na Chegada (52).
+ */
+export function determineNextRollValue(state: GameState): number {
+  const activePlayer = state.players[state.activePlayerIndex];
+  if (!activePlayer) return Math.floor(Math.random() * 6) + 1;
+
+  const distanceToFinish = FINISH_POSITION - activePlayer.currentPosition;
+
+  // Se já houver 5 ou mais tentativas frustradas de alcançar a chegada
+  // e o jogador atual estiver na reta final (5 casas ou menos da meta)
+  if (
+    (state.failedFinishAttempts ?? 0) >= MAX_FAILED_FINISH_ATTEMPTS &&
+    distanceToFinish >= 1 &&
+    distanceToFinish <= 5
+  ) {
+    return distanceToFinish;
+  }
+
+  return Math.floor(Math.random() * 6) + 1;
 }
 
 /**
@@ -244,13 +273,24 @@ export function executeMove(
     };
   });
 
+  // 4. Monitoramento da regra oculta de anti-estagnação na reta final (>= 47)
+  const isFinalStretch = activePlayer.currentPosition >= FINAL_STRETCH_THRESHOLD;
+  let newFailedAttempts = state.failedFinishAttempts ?? 0;
+
+  if (hasWon) {
+    newFailedAttempts = 0;
+  } else if (isFinalStretch) {
+    newFailedAttempts += 1;
+  }
+
   const nextState: GameState = {
     ...state,
     players: updatedPlayers,
     lastDiceRoll: diceRoll,
     lastMoveResult: moveResult,
     phase: hasWon ? 'celebration' : 'playing',
-    winner: hasWon ? updatedPlayers[state.activePlayerIndex] : null
+    winner: hasWon ? updatedPlayers[state.activePlayerIndex] : null,
+    failedFinishAttempts: newFailedAttempts
   };
 
   return { nextState, moveResult };

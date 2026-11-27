@@ -6,7 +6,8 @@ import {
   createInitialGameState, 
   generateMoveSteps, 
   executeMove, 
-  advanceTurn 
+  advanceTurn,
+  determineNextRollValue
 } from './core';
 import { BoardView } from './components/BoardView';
 import { DiceControl } from './components/DiceControl';
@@ -29,6 +30,7 @@ export const App: React.FC = () => {
   const [activeSpecialEvent, setActiveSpecialEvent] = useState<{ event: SpecialEventOccurrence; playerName: string } | null>(null);
   const [showCoordinatePicker, setShowCoordinatePicker] = useState<boolean>(false);
   const [showAboutModal, setShowAboutModal] = useState<boolean>(false);
+  const [isTurnCooldown, setIsTurnCooldown] = useState<boolean>(false);
   const [hasSavedGame, setHasSavedGame] = useState<boolean>(false);
 
   // Inicializa auto-reacquire do Wake Lock e checa se há save no localStorage
@@ -57,6 +59,7 @@ export const App: React.FC = () => {
     newState.phase = 'playing';
     setGameState(newState);
     setHasSavedGame(false);
+    setIsTurnCooldown(false);
     setNotification(`Vez de ${playerConfigs[0].name}! Toque no dado para jogar! 🎲`);
   };
 
@@ -144,8 +147,11 @@ export const App: React.FC = () => {
 
         // 4. Passagem de turno (caso não haja modal de evento e não seja vitória)
         if (!moveResult.hasWon && !moveResult.specialEvent) {
+          // Ativa imediatamente o cooldown de 2 segundos com aviso "Aguarde" sobre o dado
+          setIsTurnCooldown(true);
+          const { nextState: turnedState, skippedPlayerName } = advanceTurn(nextState);
+
           setTimeout(() => {
-            const { nextState: turnedState, skippedPlayerName } = advanceTurn(nextState);
             if (skippedPlayerName) {
               setNotification(`📸 ${skippedPlayerName} tirou foto com o unicórnio e descansou a rodada!`);
             } else {
@@ -153,7 +159,12 @@ export const App: React.FC = () => {
               setNotification(`Vez de ${nextPlayer?.name}! Toque no dado! 🎲`);
             }
             setGameState(turnedState);
-          }, 1200);
+          }, 600);
+
+          // Libera o dado exatamente após 2 segundos (tempo para crianças assimilarem a vez)
+          setTimeout(() => {
+            setIsTurnCooldown(false);
+          }, 2000);
         }
       }
     }, 280);
@@ -163,16 +174,18 @@ export const App: React.FC = () => {
   const handleDismissSpecialEvent = () => {
     setActiveSpecialEvent(null);
     if (!gameState.winner) {
+      setIsTurnCooldown(true);
+      const { nextState: turnedState, skippedPlayerName } = advanceTurn(gameState);
+      if (skippedPlayerName) {
+        setNotification(`📸 ${skippedPlayerName} tirou foto com o unicórnio e descansou a rodada!`);
+      } else {
+        const nextPlayer = turnedState.players[turnedState.activePlayerIndex];
+        setNotification(`Vez de ${nextPlayer?.name}! Toque no dado! 🎲`);
+      }
+      setGameState(turnedState);
       setTimeout(() => {
-        const { nextState: turnedState, skippedPlayerName } = advanceTurn(gameState);
-        if (skippedPlayerName) {
-          setNotification(`📸 ${skippedPlayerName} tirou foto com o unicórnio e descansou a rodada!`);
-        } else {
-          const nextPlayer = turnedState.players[turnedState.activePlayerIndex];
-          setNotification(`Vez de ${nextPlayer?.name}! Toque no dado! 🎲`);
-        }
-        setGameState(turnedState);
-      }, 400);
+        setIsTurnCooldown(false);
+      }, 2000);
     }
   };
 
@@ -182,6 +195,7 @@ export const App: React.FC = () => {
     setActiveSpecialEvent(null);
     setNotification(null);
     setHasSavedGame(false);
+    setIsTurnCooldown(false);
   };
 
   return (
@@ -297,8 +311,10 @@ export const App: React.FC = () => {
               activePlayer={activePlayer}
               isRolling={gameState.isRolling}
               isMoving={gameState.isMoving}
+              isCooldown={isTurnCooldown}
               lastRoll={gameState.lastDiceRoll}
               onRoll={handleRollDice}
+              onRollRequest={() => determineNextRollValue(gameState)}
             />
           </aside>
         )}
