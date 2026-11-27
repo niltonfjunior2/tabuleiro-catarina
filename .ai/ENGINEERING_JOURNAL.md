@@ -115,4 +115,24 @@ Registro contínuo de aprendizados técnicos, restrições descobertas, débitos
 * Nunca realizar sorteios aleatórios de forma desacoplada entre a camada visual e o estado de domínio. O número do dado deve ser uma fonte única da verdade compartilhada diretamente com o loop de movimentação.
 
 ### 3. Débitos Técnicos
+* **Status:** **ZERO DÉBITOS PENDENTES ✓**
+
+---
+
+## MANUTENÇÃO CONTÍNUA (RAG) — OTIMIZAÇÕES MOBILE LANDSCAPE E DOCK LATERAL DO DADO
+
+### 1. Problemas Encontrados e Soluções
+* **Problema 1: Incompatibilidade de Altura dos Modais em Smartphones em Modo Paisagem**
+  * *Descrição:* Em smartphones na horizontal, a altura útil de tela é reduzida (~300px a 370px). A janela inicial de escolha dos jogadores ficava cortada nas bordas e sem barra de rolagem.
+  * *Causa:* Uso de classes de altura estática sem contenção vertical nem diretiva `overflow-y-auto`.
+  * *Solução:* Aplicação de `max-h-[92dvh] overflow-y-auto` e distribuição dos cards de jogadores em grade de 2 colunas responsivas (`grid-cols-1 sm:grid-cols-2`) nos modais `PlayerSetupModal`, `SpecialEventModal` e `VictoryModal`.
+* **Problema 2: Oclusão das Casas 36-39 pelo Botão Flutuante do Dado no Canto Inferior Direito**
+  * *Descrição:* Em smartphones com viewport panorâmica, o controle do dado posicionado de forma absoluta no canto inferior direito cobria as casas 36 a 39 do tabuleiro.
+  * *Causa:* Posicionamento `absolute bottom-2 right-2` sobreposto à imagem do tabuleiro.
+  * *Solução:* Reestruturação do layout no `App.tsx` para um fluxo flex horizontal (`flex-row`), alocando o `DiceControl` em uma coluna lateral dedicada (`aside` dock direita). O tabuleiro permanece centralizado e desobstruído com seu aspect ratio preservado, e o dado fica comodamente acessível para o polegar direito dos jogadores.
+
+### 2. Lições Aprendidas
+* Em jogos mobile que operam estritamente em orientação paisagem, o aspect ratio do viewport (16:9 a 20:9) é mais largo que o tabuleiro tradicional (1.428). Utilizar o espaço excedente à direita para docas de controle interativo (como o dado) elimina totalmente a necessidade de sobrepor botões em cima de casas jogáveis.
+
+### 3. Débitos Técnicos
 * **Status:** **ZERO DÉBITOS PENDENTES ✓** (Repositório limpo, 19/19 testes aprovados, build atualizado no GitHub).
