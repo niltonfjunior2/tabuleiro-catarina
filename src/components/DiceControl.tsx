@@ -123,7 +123,7 @@ export const DiceControl: React.FC<DiceControlProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-1.5 bg-white/95 backdrop-blur-md p-2 rounded-2xl shadow-xl border-2 border-pink-200 select-none">
+    <div className="w-full max-w-[92px] sm:max-w-[104px] flex flex-col items-center justify-center gap-1.5 bg-white/95 backdrop-blur-md p-2 rounded-2xl shadow-xl border-2 border-pink-200 select-none box-border">
       {/* Informações do Jogador da Vez */}
       <div className="flex flex-col items-center text-center">
         <span className="text-[8px] sm:text-[9px] font-black text-gray-400 uppercase tracking-wider">
@@ -160,21 +160,23 @@ export const DiceControl: React.FC<DiceControlProps> = ({
         )}
       </button>
 
-      {/* Indicador de Status Lúdico Abaixo do Dado (Sem Esconder o Número) */}
-      {isCooldown || isMoving ? (
-        <div className="px-2 py-0.5 bg-amber-100 border border-amber-300 rounded-full flex items-center justify-center gap-1 shadow-sm animate-pulse">
-          <span className="text-[10px] sm:text-xs">⏳</span>
-          <span className="text-[9px] sm:text-[10px] font-black uppercase text-amber-800 tracking-wider">
-            Aguarde
-          </span>
-        </div>
-      ) : (
-        <div className="px-2.5 py-0.5 bg-pink-100 border border-pink-300 rounded-full flex items-center justify-center gap-1 shadow-sm transition-all hover:bg-pink-200">
-          <span className="text-[9px] sm:text-[10px] font-black text-pink-700 tracking-wider">
-            Rolar 🎲
-          </span>
-        </div>
-      )}
+      {/* Indicador de Status Lúdico Abaixo do Dado (Largura e altura fixas para eliminar CLS) */}
+      <div className="w-full max-w-[84px] h-6 flex items-center justify-center">
+        {isCooldown || isMoving ? (
+          <div className="w-full h-full bg-amber-100 border border-amber-300 rounded-full flex items-center justify-center gap-1 shadow-sm animate-pulse">
+            <span className="text-[10px] sm:text-xs">⏳</span>
+            <span className="text-[9px] sm:text-[10px] font-black uppercase text-amber-800 tracking-wider">
+              Aguarde
+            </span>
+          </div>
+        ) : (
+          <div className="w-full h-full bg-pink-100 border border-pink-300 rounded-full flex items-center justify-center gap-1 shadow-sm transition-all hover:bg-pink-200">
+            <span className="text-[9px] sm:text-[10px] font-black text-pink-700 tracking-wider">
+              Rolar 🎲
+            </span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -87,6 +87,13 @@ describe('GameEngine - Cat no Reino dos Unicórnios', () => {
       expect(result.event?.rule.title).toBe('Melhores Amigos');
     });
 
+    it('Casa 13: sem rolagem prévia mantém peão na casa 13 aguardando ação da criança', () => {
+      const result = evaluateSpecialTile(13);
+      expect(result.finalPosition).toBe(13);
+      expect(result.event?.tileNumber).toBe(13);
+      expect(result.event?.luckRoll).toBeUndefined();
+    });
+
     it('Casa 13: minigame da sorte com número ímpar deve avançar 3 casas (13 -> 16)', () => {
       const result = evaluateSpecialTile(13, 3); // 3 é ímpar
       expect(result.finalPosition).toBe(16);

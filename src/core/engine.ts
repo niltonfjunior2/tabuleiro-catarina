@@ -176,19 +176,30 @@ export function evaluateSpecialTile(
     }
 
     case 'roll_again_luck': {
-      // Casa 13: Se ímpar avança 3 (para 16), se par volta 3 (para 10)
-      const roll = customLuckRoll ?? (Math.floor(Math.random() * 6) + 1);
-      const isOdd = roll % 2 !== 0;
-      const target = isOdd ? tileNumber + 3 : Math.max(tileNumber - 3, START_POSITION);
+      // Casa 13: Se customLuckRoll for injetado (ex: testes), resolve imediatamente.
+      // Se não, o peão pousa na própria Casa 13, aguardando o minigame interativo da criança!
+      if (customLuckRoll !== undefined) {
+        const isOdd = customLuckRoll % 2 !== 0;
+        const target = isOdd ? tileNumber + 3 : Math.max(tileNumber - 3, START_POSITION);
+        return {
+          finalPosition: target,
+          event: {
+            tileNumber,
+            rule,
+            previousPosition: tileNumber,
+            newPosition: target,
+            luckRoll: customLuckRoll,
+            isOdd
+          }
+        };
+      }
       return {
-        finalPosition: target,
+        finalPosition: tileNumber,
         event: {
           tileNumber,
           rule,
           previousPosition: tileNumber,
-          newPosition: target,
-          luckRoll: roll,
-          isOdd
+          newPosition: tileNumber
         }
       };
     }

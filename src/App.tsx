@@ -170,10 +170,80 @@ export const App: React.FC = () => {
     }, 280);
   };
 
-  // Dispensar modal de evento especial e passar o turno
-  const handleDismissSpecialEvent = () => {
+  // Dispensar modal de evento especial e passar o turno (com animação da Casa 13)
+  const handleDismissSpecialEvent = (luckRoll?: number) => {
+    const currentEvent = activeSpecialEvent;
     setActiveSpecialEvent(null);
-    if (!gameState.winner) {
+
+    if (!gameState.winner && currentEvent) {
+      // Se for a Casa 13 e a criança rolou o dado da sorte:
+      if (currentEvent.event.tileNumber === 13 && luckRoll !== undefined) {
+        const isOdd = luckRoll % 2 !== 0;
+        const target = isOdd ? 16 : 10;
+        const steps = isOdd
+          ? [
+              { from: 13, to: 14, isBounceBack: false },
+              { from: 14, to: 15, isBounceBack: false },
+              { from: 15, to: 16, isBounceBack: false }
+            ]
+          : [
+              { from: 13, to: 12, isBounceBack: true },
+              { from: 12, to: 11, isBounceBack: true },
+              { from: 11, to: 10, isBounceBack: true }
+            ];
+
+        setGameState(prev => ({ ...prev, isMoving: true }));
+        let stepIdx = 0;
+        const stepInterval = setInterval(() => {
+          if (stepIdx < steps.length) {
+            const currentStep = steps[stepIdx];
+            soundService.playStepSound(stepIdx);
+            setGameState(prev => ({
+              ...prev,
+              players: prev.players.map((p, idx) =>
+                idx === prev.activePlayerIndex ? { ...p, currentPosition: currentStep.to } : p
+              )
+            }));
+            setNotification(
+              `${isOdd ? '🦄 Avançando' : '🐾 Voltando'}: casa ${currentStep.to} (${stepIdx + 1} de 3)`
+            );
+            stepIdx++;
+          } else {
+            clearInterval(stepInterval);
+            soundService.playSpecialEventSound();
+
+            const finalPlayers = gameState.players.map((p, idx) =>
+              idx === gameState.activePlayerIndex ? { ...p, currentPosition: target } : p
+            );
+            const stateAfterMove: GameState = {
+              ...gameState,
+              isMoving: false,
+              players: finalPlayers
+            };
+
+            setNotification(`⭐ ${currentEvent.playerName} chegou na casa ${target}!`);
+            setIsTurnCooldown(true);
+            const { nextState: turnedState, skippedPlayerName } = advanceTurn(stateAfterMove);
+
+            setTimeout(() => {
+              if (skippedPlayerName) {
+                setNotification(`📸 ${skippedPlayerName} tirou foto com o unicórnio e descansou a rodada!`);
+              } else {
+                const nextPlayer = turnedState.players[turnedState.activePlayerIndex];
+                setNotification(`Vez de ${nextPlayer?.name}! Toque no dado! 🎲`);
+              }
+              setGameState(turnedState);
+            }, 600);
+
+            setTimeout(() => {
+              setIsTurnCooldown(false);
+            }, 2000);
+          }
+        }, 320);
+        return;
+      }
+
+      // Demais eventos especiais
       setIsTurnCooldown(true);
       const { nextState: turnedState, skippedPlayerName } = advanceTurn(gameState);
       if (skippedPlayerName) {
@@ -304,9 +374,9 @@ export const App: React.FC = () => {
           )}
         </main>
 
-        {/* Painel Lateral Direito: Controle do Dado e Vez do Jogador (Ergonomia para o Polegar) */}
+        {/* Painel Lateral Direito: Controle do Dado e Vez do Jogador (Ergonomia para o Polegar e Largura Fixa Anti-CLS) */}
         {gameState.phase === 'playing' && activePlayer && !showCoordinatePicker && (
-          <aside className="h-full flex items-center justify-center shrink-0 pr-1 z-20">
+          <aside className="h-full w-24 sm:w-28 flex items-center justify-center shrink-0 pr-1 z-20">
             <DiceControl
               activePlayer={activePlayer}
               isRolling={gameState.isRolling}
