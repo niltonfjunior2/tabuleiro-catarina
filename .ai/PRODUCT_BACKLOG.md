@@ -29,6 +29,14 @@ Backlog estruturado e priorizado por valor de negócio, derivado diretamente da 
   2. Se Portrait, sobrepor uma camada amigável com ilustração instruindo a girar o dispositivo. [ENTREGUE]
   3. Desaparecer automaticamente assim que o dispositivo for girado para Landscape. [ENTREGUE]
 
+#### US-1.1.3: Rolagem e Responsividade dos Modais em Altura Reduzida [CONCLUÍDO ✓]
+* **Como** jogador em celular na horizontal (viewport de altura reduzida ~300px a 360px),
+* **Quero** que os modais de seleção de jogadores, regras especiais e vitória caibam na tela com rolagem vertical suave e botões acessíveis,
+* **Para que** nenhum conteúdo ou botão de ação fique cortado ou inacessível.
+* **Critérios de Aceite:**
+  1. Contenção vertical com `max-h-[92dvh]` e `overflow-y-auto` em todos os modais. [ENTREGUE]
+  2. Distribuição dos cards de jogadores em grid de 2 colunas responsivas para economizar espaço vertical. [ENTREGUE]
+
 ---
 
 ## EPIC 2: MOTOR DE REGRAS E TABULEIRO (CORE ENGINE)
@@ -76,6 +84,15 @@ Backlog estruturado e priorizado por valor de negócio, derivado diretamente da 
   1. Animação sequencial com micro-salto (*hop*) a cada casa avançada. [ENTREGUE - 280ms/passo]
   2. Efeito sonoro discreto a cada salto de casa. [ENTREGUE via Web Audio API]
   3. Trava de interação durante o movimento para evitar toques acidentais múltiplos. [ENTREGUE]
+
+#### US-2.2.3: Doca Lateral Direita Ergonômica para o Dado [CONCLUÍDO ✓]
+* **Como** jogador em dispositivo móvel,
+* **Quero** que o controle de rolagem do dado fique posicionado em uma barra lateral dedicada à direita da tela,
+* **Para que** o polegar acione a rolagem com facilidade sem cobrir nenhuma casa (36 a 39) do tabuleiro.
+* **Critérios de Aceite:**
+  1. Layout horizontal (`flex-row`) com o tabuleiro à esquerda e dock de controle à direita. [ENTREGUE]
+  2. Desobstrução total das casas 36 a 39. [ENTREGUE]
+  3. Feedback visual contínuo da vez e última pontuação no crachá do dado. [ENTREGUE]
 
 ### FEATURE 2.3: Automação das Casas Especiais
 * **Prioridade:** Alta
@@ -181,3 +198,21 @@ Backlog estruturado e priorizado por valor de negócio, derivado diretamente da 
 * **Critérios de Aceite:**
   1. Ativação da Screen Wake Lock API quando a partida estiver ativa. [ENTREGUE]
   2. Tratamento gracioso sem falhas em navegadores que não suportem a API. [ENTREGUE]
+
+#### US-4.1.4: Botão de Instalação Guiada PWA Cross-Platform [CONCLUÍDO ✓]
+* **Como** usuário acessando via navegador no Android, iOS Safari ou Desktop,
+* **Quero** um botão destacado para instalar o PWA na tela inicial com instruções claras para cada sistema operacional,
+* **Para que** eu possa instalar o jogo sem precisar procurar menus obscuros do navegador.
+* **Critérios de Aceite:**
+  1. Captura transparente do evento `beforeinstallprompt` no Android/Chrome/Edge. [ENTREGUE]
+  2. Modal ilustrado com passo a passo de 3 etapas no iOS Safari. [ENTREGUE]
+  3. Auto-ocultação do botão quando a aplicação já estiver sendo executada em modo standalone. [ENTREGUE]
+
+#### US-4.1.5: Cabeçalho Superior Estrutural sem Oclusão do Tabuleiro [CONCLUÍDO ✓]
+* **Como** jogador em celular,
+* **Quero** que os botões de controle, o áudio e a notificação da partida fiquem em um cabeçalho dedicado no topo da tela,
+* **Para que** nenhuma casa superior do tabuleiro (especialmente as casas 12 a 14, 22 a 24 e 25 a 26) seja sobreposta.
+* **Critérios de Aceite:**
+  1. Elemento `<header>` integrado ao fluxo flex superior. [ENTREGUE]
+  2. Isolamento físico entre a linha de controles e o palco do tabuleiro. [ENTREGUE]
+  3. Notificação centralizada com suporte a truncamento em telas ultra-estreitas. [ENTREGUE]

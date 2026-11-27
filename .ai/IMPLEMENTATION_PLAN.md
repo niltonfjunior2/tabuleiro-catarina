@@ -20,6 +20,9 @@ O projeto é dividido em **4 Sprints Sequenciais**:
        ▼
 [SPRINT 4: PWA Offline, Persistência & Deploy Vercel] 
        │ (Service Worker Cache-First, localStorage, CI/CD GitHub + Vercel, Auditoria Final)
+       ▼
+[CICLO DE HOMOLOGAÇÃO & SUSTENTAÇÃO MOBILE (RAG)]
+       │ (Doca Lateral do Dado, Header Superior Desobstruído, Modais Landscape, Instalação PWA)
 ```
 
 ---
@@ -80,6 +83,19 @@ O projeto é dividido em **4 Sprints Sequenciais**:
   6. Pipeline de CI/CD automatizado via GitHub Actions em `.github/workflows/ci.yml`. [CONCLUÍDO]
   7. Bateria de testes de persistência unitários no Vitest (19/19 testes aprovados). [CONCLUÍDO]
 * **Marco de Entrega (Milestone 4):** Produto final em padrão de produção, preparado para deploy na Vercel e instalação como PWA 100% offline para o aniversário da Catarina. [ALCANÇADO ✓]
+
+---
+
+### CICLO DE HOMOLOGAÇÃO & SUSTENTAÇÃO MOBILE (RAG) [STATUS: CONCLUÍDO ✓]
+* **Objetivo:** Refinamento ergonômico pós-deploy em produção real mobile para garantir que nenhum elemento visual ou controle sobreponha o tabuleiro ou quebre a rolagem em telas pequenas.
+* **Tarefas Técnicas:**
+  1. Reestruturação do controle do dado para doca lateral dedicada (`aside` em `flex-row`), desobstruindo as casas 36 a 39. [CONCLUÍDO]
+  2. Implementação de cabeçalho superior formal (`<header>`), transferindo botões e notificações flutuantes e desobstruindo as casas 12-14, 22-24 e 25-26. [CONCLUÍDO]
+  3. Contenção vertical e rolagem (`max-h-[92dvh] overflow-y-auto`) nos modais de participantes, regras especiais e vitória para celulares em modo paisagem. [CONCLUÍDO]
+  4. Sincronização do sorteio do dado com renderização de cubo 3D com pips físicos e badge de numeração arábica. [CONCLUÍDO]
+  5. Componente de instalação guiada PWA (`InstallPWAButton`) com suporte a Android e modal explicativo para iOS Safari. [CONCLUÍDO]
+  6. Substituição dos ícones PWA e favicon oficial a partir da arte de unicórnio `.ai/ícone.jpg`. [CONCLUÍDO]
+* **Marco de Entrega (Milestone 5 - Homologação Final):** Jogo 100% calibrado, polido e testado em produção mobile, sem nenhuma sobreposição de elementos na malha de casas e com zero dependências externas. [ALCANÇADO ✓]
 
 ---
 

@@ -6,13 +6,13 @@ Aplicação Web Progressiva (PWA) interativa, mobile-first e 100% offline-first 
 
 ## 🦄 Recursos Principais
 
-* **Modo Paisagem (Landscape):** Interface panorâmica adaptada para visualização contínua do tabuleiro original.
-* **Até 4 Jogadores:** Identificados visualmente por cores (Rosa, Lilás, Amarelo e Turquesa).
+* **Modo Paisagem (Landscape) & Doca Lateral:** Interface panorâmica com cabeçalho superior e dock lateral do dado, garantindo 100% de visibilidade de todas as 52 casas do tabuleiro sem sobreposições.
+* **Até 4 Jogadores:** Identificados visualmente por cores (Rosa, Lilás, Amarelo e Turquesa) em pass-and-play.
 * **Automação 100% Visual para Crianças:** Sem exigência de leitura de textos. Feedback visual imediato em todas as ações.
 * **Casas Especiais Oficiais:** Saltos, penalidade de foto, atalho, minigame da sorte na casa 13 e corrida até a chegada.
 * **Regra da Chegada Exata:** Ricochete (bate-e-volta) para quem ultrapassar o valor exato da casa Chegada.
 * **Celebração:** Explosão de fogos de artifício na tela ao consagrar o vencedor.
-* **100% Offline (PWA):** Instalação na tela inicial e operação completa sem conexão com a internet.
+* **100% Offline (PWA):** Instalação facilitada com botão nativo para Android e iOS Safari, com operação completa sem internet.
 * **Screen Wake Lock:** Mantém a tela ligada sem apagar por inatividade durante a partida.
 * **Trilha Sonora Relaxante:** Fundo musical suave em loop com controle de ativação/mudo.
 
