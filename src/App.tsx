@@ -255,28 +255,33 @@ export const App: React.FC = () => {
         <AudioControl />
       </div>
 
-      {/* Área Central: Visualização do Tabuleiro Oficial */}
-      <main className="flex-1 w-full h-full relative overflow-hidden flex items-center justify-center">
-        {showCoordinatePicker ? (
-          <CoordinatePicker onClose={() => setShowCoordinatePicker(false)} />
-        ) : (
-          <BoardView
-            players={gameState.players}
-            activePlayerIndex={gameState.activePlayerIndex}
-          />
-        )}
-      </main>
+      {/* Área Principal: Tabuleiro à Esquerda e Dock Lateral do Dado à Direita */}
+      <div className="flex-1 w-full h-full relative overflow-hidden flex items-center justify-between p-1 box-border gap-1 sm:gap-2">
+        {/* Visualização do Tabuleiro Oficial (100% desobstruído) */}
+        <main className="flex-1 h-full relative overflow-hidden flex items-center justify-center">
+          {showCoordinatePicker ? (
+            <CoordinatePicker onClose={() => setShowCoordinatePicker(false)} />
+          ) : (
+            <BoardView
+              players={gameState.players}
+              activePlayerIndex={gameState.activePlayerIndex}
+            />
+          )}
+        </main>
 
-      {/* Controle Interativo do Dado */}
-      {gameState.phase === 'playing' && activePlayer && !showCoordinatePicker && (
-        <DiceControl
-          activePlayer={activePlayer}
-          isRolling={gameState.isRolling}
-          isMoving={gameState.isMoving}
-          lastRoll={gameState.lastDiceRoll}
-          onRoll={handleRollDice}
-        />
-      )}
+        {/* Painel Lateral Direito: Controle do Dado e Vez do Jogador (Ergonomia para o Polegar) */}
+        {gameState.phase === 'playing' && activePlayer && !showCoordinatePicker && (
+          <aside className="h-full flex items-center justify-center shrink-0 pr-1 z-30">
+            <DiceControl
+              activePlayer={activePlayer}
+              isRolling={gameState.isRolling}
+              isMoving={gameState.isMoving}
+              lastRoll={gameState.lastDiceRoll}
+              onRoll={handleRollDice}
+            />
+          </aside>
+        )}
+      </div>
     </div>
   );
 };

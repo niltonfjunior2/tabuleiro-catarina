@@ -119,17 +119,14 @@ export const DiceControl: React.FC<DiceControlProps> = ({
   };
 
   return (
-    <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 z-40 flex items-center gap-2.5 bg-white/95 backdrop-blur-md p-2 sm:p-2.5 rounded-2xl shadow-2xl border-2 border-pink-200">
+    <div className="flex flex-col items-center justify-center gap-1.5 bg-white/95 backdrop-blur-md p-2 rounded-2xl shadow-xl border-2 border-pink-200 select-none">
       {/* Informações do Jogador da Vez */}
-      <div className="flex flex-col text-right">
-        <span className="text-[9px] sm:text-[10px] font-black text-gray-400 uppercase tracking-wider">
+      <div className="flex flex-col items-center text-center">
+        <span className="text-[8px] sm:text-[9px] font-black text-gray-400 uppercase tracking-wider">
           Vez de Jogar
         </span>
-        <span className={`text-xs sm:text-sm font-black truncate max-w-[100px] ${accent.text}`}>
+        <span className={`text-[11px] sm:text-xs font-black truncate max-w-[80px] ${accent.text}`}>
           {activePlayer.name}
-        </span>
-        <span className="text-[9px] text-gray-500 font-bold">
-          Toque no dado! 🎲
         </span>
       </div>
 
@@ -137,7 +134,7 @@ export const DiceControl: React.FC<DiceControlProps> = ({
       <button
         onClick={handleClick}
         disabled={isDisabled}
-        className={`p-1.5 rounded-2xl bg-gradient-to-br ${accent.bg} shadow-lg transition-transform active:scale-95 disabled:opacity-85 disabled:pointer-events-none select-none relative group flex items-center gap-1.5`}
+        className={`p-1.5 rounded-2xl bg-gradient-to-br ${accent.bg} shadow-lg transition-transform active:scale-95 disabled:opacity-85 disabled:pointer-events-none select-none relative group flex flex-col items-center gap-1`}
         title="Toque para jogar o dado!"
       >
         {/* Face do Dado com Pips Reais */}
@@ -146,18 +143,22 @@ export const DiceControl: React.FC<DiceControlProps> = ({
         </div>
 
         {/* Indicador Numérico Grande e Nítido para a Criança */}
-        <div className="w-8 h-8 sm:w-9 sm:h-9 bg-white/90 rounded-xl flex items-center justify-center font-black text-base sm:text-lg text-gray-800 shadow">
+        <div className="w-full py-0.5 bg-white/90 rounded-lg flex items-center justify-center font-black text-xs sm:text-sm text-gray-800 shadow">
           {displayRoll}
         </div>
 
         {/* Pulso Indicador quando liberado para jogar */}
         {!isDisabled && (
-          <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+          <span className="absolute -top-1 -right-1 flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-pink-500 border border-white"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500 border border-white"></span>
           </span>
         )}
       </button>
+
+      <span className="text-[8px] text-gray-400 font-bold text-center leading-tight">
+        Rolar 🎲
+      </span>
     </div>
   );
 };
