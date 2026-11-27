@@ -13,10 +13,10 @@ export const AudioControl: React.FC = () => {
   return (
     <button
       onClick={handleToggle}
-      className={`p-2 rounded-xl shadow-md border transition-all active:scale-95 flex items-center justify-center text-sm font-bold ${
+      className={`p-1 sm:p-1.5 rounded-lg shadow-sm border transition-all active:scale-95 flex items-center justify-center text-xs font-bold ${
         isMuted
           ? 'bg-gray-100 text-gray-500 border-gray-300'
-          : 'bg-white text-pink-600 border-pink-300 ring-2 ring-pink-100 animate-pulse'
+          : 'bg-white text-pink-600 border-pink-300 ring-1 ring-pink-200 animate-pulse'
       }`}
       title={isMuted ? 'Ligar Fundo Musical e Sons' : 'Silenciar Sons'}
     >

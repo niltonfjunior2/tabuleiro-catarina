@@ -72,7 +72,7 @@ export const InstallPWAButton: React.FC = () => {
     <>
       <button
         onClick={handleInstallClick}
-        className="px-2.5 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-xl shadow-md border border-emerald-300 text-xs font-black transition-all active:scale-95 flex items-center gap-1.5 animate-pulse"
+        className="px-2 py-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white rounded-lg shadow-sm border border-emerald-300 text-[11px] sm:text-xs font-black transition-all active:scale-95 flex items-center gap-1 animate-pulse"
         title="Instalar o jogo no seu celular ou tablet para jogar sem internet"
       >
         <span>📲</span>

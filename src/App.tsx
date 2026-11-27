@@ -213,52 +213,59 @@ export const App: React.FC = () => {
         />
       )}
 
-      {/* Barra de Notificação Superior Lúdica */}
-      {notification && !activeSpecialEvent && !gameState.winner && (
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg border-2 border-pink-300 text-xs sm:text-sm font-black text-pink-700 animate-slideDown flex items-center gap-2 max-w-[90vw] truncate">
-          <span>{notification}</span>
+      {/* Barra Superior Dedicada (Header): Controles e Notificações sem Sobrepor o Tabuleiro */}
+      <header className="w-full h-8 sm:h-9 px-2 shrink-0 bg-pink-200/60 backdrop-blur-sm border-b border-pink-300/60 flex items-center justify-between gap-1 sm:gap-2 z-30">
+        {/* Botões de Ação Auxiliares no Topo Esquerdo */}
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+          <button
+            onClick={handleRestart}
+            className="px-2 py-1 bg-white/90 hover:bg-white rounded-lg shadow-sm border border-pink-200 text-[11px] sm:text-xs font-bold text-pink-600 transition-all active:scale-95 flex items-center gap-1"
+            title="Reiniciar Partida"
+          >
+            <span>🔄</span>
+            <span className="hidden sm:inline">Reiniciar</span>
+          </button>
+
+          {/* Botão para Instalar o PWA */}
+          <InstallPWAButton />
+
+          {/* Botão de Tela Cheia para Navegadores Web */}
+          <FullscreenButton />
+
+          {/* Botão para Calibrador de Coordenadas (Modo Dev) */}
+          <button
+            onClick={() => setShowCoordinatePicker(prev => !prev)}
+            className={`px-1.5 py-1 rounded-lg shadow-sm border text-[10px] sm:text-[11px] font-black transition-all active:scale-95 flex items-center gap-1 ${
+              showCoordinatePicker
+                ? 'bg-yellow-400 hover:bg-yellow-300 text-yellow-950 border-yellow-500 ring-2 ring-yellow-200'
+                : 'bg-purple-100 hover:bg-purple-200 text-purple-700 border-purple-300'
+            }`}
+            title="Alternar Ferramenta de Calibração"
+          >
+            <span>🎯</span>
+            <span className="hidden md:inline">{showCoordinatePicker ? 'Sair' : 'Calibrar'}</span>
+          </button>
         </div>
-      )}
 
-      {/* Botões de Ação Auxiliares no Topo Esquerdo */}
-      <div className="absolute top-2 left-2 z-40 flex items-center gap-2">
-        <button
-          onClick={handleRestart}
-          className="p-2 bg-white/90 hover:bg-white rounded-xl shadow-md border border-pink-200 text-xs font-bold text-pink-600 transition-all active:scale-95"
-          title="Reiniciar Partida"
-        >
-          🔄 Reiniciar
-        </button>
+        {/* Notificação Central Lúdica */}
+        <div className="flex-1 min-w-0 flex items-center justify-center px-1">
+          {notification && !activeSpecialEvent && !gameState.winner && (
+            <div className="bg-white/95 backdrop-blur-md px-2.5 sm:px-3 py-0.5 rounded-full shadow-sm border border-pink-300 text-[11px] sm:text-xs font-black text-pink-700 animate-slideDown flex items-center gap-1.5 max-w-full truncate">
+              <span className="truncate">{notification}</span>
+            </div>
+          )}
+        </div>
 
-        {/* Botão para Instalar o PWA */}
-        <InstallPWAButton />
-
-        {/* Botão de Tela Cheia para Navegadores Web */}
-        <FullscreenButton />
-
-        {/* Botão para Calibrador de Coordenadas (Modo Dev) */}
-        <button
-          onClick={() => setShowCoordinatePicker(prev => !prev)}
-          className={`p-2 rounded-xl shadow-md border text-[10px] font-black transition-all active:scale-95 ${
-            showCoordinatePicker
-              ? 'bg-yellow-400 hover:bg-yellow-300 text-yellow-950 border-yellow-500 ring-2 ring-yellow-200'
-              : 'bg-purple-100 hover:bg-purple-200 text-purple-700 border-purple-300'
-          }`}
-          title="Alternar Ferramenta de Calibração"
-        >
-          {showCoordinatePicker ? '✖ Sair do Calibrador' : '🎯 Calibrador'}
-        </button>
-      </div>
-
-      {/* Controle de Áudio Flutuante no Topo Direito */}
-      <div className="absolute top-2 right-2 z-40">
-        <AudioControl />
-      </div>
+        {/* Controle de Áudio no Topo Direito */}
+        <div className="shrink-0 flex items-center">
+          <AudioControl />
+        </div>
+      </header>
 
       {/* Área Principal: Tabuleiro à Esquerda e Dock Lateral do Dado à Direita */}
-      <div className="flex-1 w-full h-full relative overflow-hidden flex items-center justify-between p-1 box-border gap-1 sm:gap-2">
+      <div className="flex-1 w-full min-h-0 relative overflow-hidden flex items-center justify-between p-1 box-border gap-1 sm:gap-2">
         {/* Visualização do Tabuleiro Oficial (100% desobstruído) */}
-        <main className="flex-1 h-full relative overflow-hidden flex items-center justify-center">
+        <main className="flex-1 h-full min-h-0 min-w-0 relative overflow-hidden flex items-center justify-center">
           {showCoordinatePicker ? (
             <CoordinatePicker onClose={() => setShowCoordinatePicker(false)} />
           ) : (
@@ -271,7 +278,7 @@ export const App: React.FC = () => {
 
         {/* Painel Lateral Direito: Controle do Dado e Vez do Jogador (Ergonomia para o Polegar) */}
         {gameState.phase === 'playing' && activePlayer && !showCoordinatePicker && (
-          <aside className="h-full flex items-center justify-center shrink-0 pr-1 z-30">
+          <aside className="h-full flex items-center justify-center shrink-0 pr-1 z-20">
             <DiceControl
               activePlayer={activePlayer}
               isRolling={gameState.isRolling}

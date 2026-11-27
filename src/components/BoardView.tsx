@@ -18,14 +18,16 @@ export const BoardView: React.FC<BoardViewProps> = ({
   coordinates.forEach(c => coordMap.set(c.tileNumber, c));
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center p-1 sm:p-2 box-border overflow-hidden bg-pink-100">
+    <div className="relative w-full h-full flex items-center justify-center p-0.5 sm:p-1 box-border overflow-hidden bg-pink-100">
       {/* Container com Aspect Ratio estrito 3543:2480 adaptado dinamicamente para nunca vazar nem cortar */}
       <div 
-        className="relative aspect-[3543/2480] shadow-2xl rounded-2xl overflow-hidden border-2 border-pink-300 bg-white flex items-center justify-center"
+        className="relative aspect-[3543/2480] shadow-2xl rounded-2xl overflow-hidden border-2 border-pink-300 bg-white flex items-center justify-center max-h-full max-w-full"
         style={{
-          width: 'min(100%, calc((100dvh - 16px) * 3543 / 2480))',
-          maxHeight: '100%',
-          maxWidth: '100%'
+          aspectRatio: '3543 / 2480',
+          width: 'auto',
+          height: '100%',
+          maxWidth: '100%',
+          maxHeight: '100%'
         }}
       >
         {/* Imagem de Fundo Oficial em WebP Retina com contain para visibilidade integral */}

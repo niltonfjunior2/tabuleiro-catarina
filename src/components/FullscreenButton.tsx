@@ -62,7 +62,7 @@ export const FullscreenButton: React.FC = () => {
   return (
     <button
       onClick={toggleFullscreen}
-      className="p-2 bg-white/90 hover:bg-white rounded-xl shadow-md border border-pink-200 text-xs font-bold text-pink-600 transition-all active:scale-95 flex items-center justify-center"
+      className="p-1 sm:p-1.5 bg-white/90 hover:bg-white rounded-lg shadow-sm border border-pink-200 text-xs font-bold text-pink-600 transition-all active:scale-95 flex items-center justify-center"
       title={isFullscreen ? 'Sair da Tela Cheia' : 'Abrir em Tela Cheia (como App Instalado)'}
     >
       <span>{isFullscreen ? '🗗' : '⛶'}</span>

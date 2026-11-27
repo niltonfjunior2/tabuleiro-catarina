@@ -130,9 +130,13 @@ Registro contínuo de aprendizados técnicos, restrições descobertas, débitos
   * *Descrição:* Em smartphones com viewport panorâmica, o controle do dado posicionado de forma absoluta no canto inferior direito cobria as casas 36 a 39 do tabuleiro.
   * *Causa:* Posicionamento `absolute bottom-2 right-2` sobreposto à imagem do tabuleiro.
   * *Solução:* Reestruturação do layout no `App.tsx` para um fluxo flex horizontal (`flex-row`), alocando o `DiceControl` em uma coluna lateral dedicada (`aside` dock direita). O tabuleiro permanece centralizado e desobstruído com seu aspect ratio preservado, e o dado fica comodamente acessível para o polegar direito dos jogadores.
+* **Problema 3: Oclusão das Casas Superiores (22-24, 12-14, 25-26) por Elementos Flutuantes no Topo**
+  * *Descrição:* Em celulares na horizontal, os botões auxiliares (`Reiniciar`, `Instalar`, etc.), o crachá de notificação e o controle de áudio, todos com `absolute top-2`, flutuavam diretamente sobre as casas da borda superior do tabuleiro.
+  * *Causa:* Coexistência de elementos absolutos sobrepostos à viewport que também era preenchida pelo tabuleiro.
+  * *Solução:* Criação de um `<header>` dedicado (`h-8 sm:h-9`) no fluxo vertical flex do `App.tsx`. Os botões, a notificação com `truncate` e o áudio foram embutidos no cabeçalho, enquanto o `<main>` e o `BoardView` ocupam estritamente o espaço restante (`flex-1 min-h-0`) com `aspectRatio: 3543 / 2480` e `max-h-full max-w-full`. Dessa forma, o tabuleiro e os controles passam a residir em linhas flex distintas e não sobrepostas, eliminando 100% de qualquer interferência visual.
 
 ### 2. Lições Aprendidas
-* Em jogos mobile que operam estritamente em orientação paisagem, o aspect ratio do viewport (16:9 a 20:9) é mais largo que o tabuleiro tradicional (1.428). Utilizar o espaço excedente à direita para docas de controle interativo (como o dado) elimina totalmente a necessidade de sobrepor botões em cima de casas jogáveis.
+* Em interfaces de jogos mobile orientados a landscape, nunca utilizar posicionamentos flutuantes `absolute` que compartilhem a mesma área que o canvas/tabuleiro. Um layout estruturado em cabeçalho superior (`header`), palco central (`main`) e dock lateral (`aside`) garante isolamento geométrico absoluto contra qualquer sobreposição, independentemente da proporção de tela do dispositivo.
 
 ### 3. Débitos Técnicos
 * **Status:** **ZERO DÉBITOS PENDENTES ✓** (Repositório limpo, 19/19 testes aprovados, build atualizado no GitHub).
