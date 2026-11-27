@@ -134,30 +134,20 @@ export const DiceControl: React.FC<DiceControlProps> = ({
         </span>
       </div>
 
-      {/* Botão de Dado Físico Realista */}
+      {/* Botão de Dado Físico Realista (100% Desobstruído para Leitura do Número) */}
       <button
         onClick={handleClick}
         disabled={isDisabled}
-        className={`p-1.5 rounded-2xl bg-gradient-to-br ${accent.bg} shadow-lg transition-transform active:scale-95 disabled:opacity-85 disabled:pointer-events-none select-none relative group flex flex-col items-center gap-1 overflow-hidden`}
+        className={`p-1.5 rounded-2xl bg-gradient-to-br ${accent.bg} shadow-lg transition-transform active:scale-95 disabled:opacity-90 disabled:pointer-events-none select-none relative group flex flex-col items-center gap-1`}
         title={isCooldown || isMoving ? 'Aguarde a sua vez...' : 'Toque para jogar o dado!'}
       >
-        {/* Overlay "Aguarde" quando em movimento ou em delay de 2s */}
-        {(isCooldown || isMoving) && (
-          <div className="absolute inset-0 bg-black/65 backdrop-blur-[2px] rounded-2xl flex flex-col items-center justify-center text-white z-20 animate-fadeIn pointer-events-none">
-            <span className="text-base sm:text-lg animate-bounce">⏳</span>
-            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-yellow-300 drop-shadow">
-              Aguarde
-            </span>
-          </div>
-        )}
-
         {/* Face do Dado com Pips Reais */}
         <div className={`transform transition-transform ${animatingSpin ? 'rotate-12 scale-105' : ''}`}>
           <DiceFaceVisual value={displayRoll} dotClass={accent.dot} />
         </div>
 
-        {/* Indicador Numérico Grande e Nítido para a Criança */}
-        <div className="w-full py-0.5 bg-white/90 rounded-lg flex items-center justify-center font-black text-xs sm:text-sm text-gray-800 shadow">
+        {/* Indicador Numérico Grande e Nítido para a Criança (Sempre Visível) */}
+        <div className="w-full py-0.5 bg-white/95 rounded-lg flex items-center justify-center font-black text-xs sm:text-sm text-gray-800 shadow">
           {displayRoll}
         </div>
 
@@ -170,10 +160,21 @@ export const DiceControl: React.FC<DiceControlProps> = ({
         )}
       </button>
 
-      {/* Rótulo inferior de status */}
-      <span className={`text-[8px] font-bold text-center leading-tight ${isCooldown || isMoving ? 'text-amber-600 font-black' : 'text-gray-400'}`}>
-        {isCooldown || isMoving ? '⏳ Aguarde' : 'Rolar 🎲'}
-      </span>
+      {/* Indicador de Status Lúdico Abaixo do Dado (Sem Esconder o Número) */}
+      {isCooldown || isMoving ? (
+        <div className="px-2 py-0.5 bg-amber-100 border border-amber-300 rounded-full flex items-center justify-center gap-1 shadow-sm animate-pulse">
+          <span className="text-[10px] sm:text-xs">⏳</span>
+          <span className="text-[9px] sm:text-[10px] font-black uppercase text-amber-800 tracking-wider">
+            Aguarde
+          </span>
+        </div>
+      ) : (
+        <div className="px-2.5 py-0.5 bg-pink-100 border border-pink-300 rounded-full flex items-center justify-center gap-1 shadow-sm transition-all hover:bg-pink-200">
+          <span className="text-[9px] sm:text-[10px] font-black text-pink-700 tracking-wider">
+            Rolar 🎲
+          </span>
+        </div>
+      )}
     </div>
   );
 };
