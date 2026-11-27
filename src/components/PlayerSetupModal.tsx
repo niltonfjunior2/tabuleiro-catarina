@@ -50,7 +50,7 @@ export const PlayerSetupModal: React.FC<PlayerSetupModalProps> = ({
           Cat no Reino dos Unicórnios
         </h2>
         <p className="text-[11px] sm:text-xs text-gray-500 mb-2 font-medium">
-          Aniversário de 5 Anos no Reino dos Unicórnios!
+          Divirta-se no aniversário de 5 anos da Catarina
         </p>
 
         {/* Botão de Continuar Partida Anterior (caso exista save no localStorage) */}

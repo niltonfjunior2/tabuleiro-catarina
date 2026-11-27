@@ -157,4 +157,25 @@ Registro contínuo de aprendizados técnicos, restrições descobertas, débitos
 * Disparar `registration.update()` no ciclo inicial de inicialização (`navigator.serviceWorker.ready`) assegura que o navegador consulte o servidor imediatamente em busca de novas versões do `sw.js` e do `manifest.webmanifest`, permitindo atualizações de PWA quase instantâneas.
 
 ### 3. Débitos Técnicos
+* **Status:** **ZERO DÉBITOS PENDENTES ✓**
+
+---
+
+## MANUTENÇÃO CONTÍNUA (RAG) — FLUXO DE INSTALAÇÃO VIA QR CODE E AJUSTE DE COPY
+
+### 1. Problemas Encontrados e Soluções
+* **Problema 1: Restrição de Segurança de Navegadores para Instalação Direta via QR Code**
+  * *Descrição:* Navegadores Android e iOS bloqueiam por segurança qualquer tentativa de instalar um PWA sem um gesto de toque explícito do usuário (*User Gesture Requirement*).
+  * *Solução:* Criação do fluxo de 1-toque com o parâmetro `?install=1` no link do QR Code (`https://cat-no-reino-dos-unicornios.vercel.app/?install=1`). No Android, o app exibe uma tela de boas-vindas com botão destacado "Instalar Agora no Celular" que aciona o `deferredPrompt.prompt()`. No iOS Safari, exibe imediatamente o guia visual de 3 etapas para adicionar à tela de início. O parâmetro é limpo da URL via `history.replaceState` após a interação.
+* **Problema 2: Geração de QR Code em Alta Resolução para Impressão**
+  * *Descrição:* Necessidade de material físico para a festa com QR Code nítido e de fácil leitura por qualquer câmera de smartphone.
+  * *Solução:* Geração do arquivo `public/assets/qrcode-cat-no-reino-dos-unicornios.png` (980x980px, 300 DPI, correção de erros nível H) apontando diretamente para o link com o parâmetro de instalação.
+* **Problema 3: Ajuste de Copywriting Solicitado**
+  * *Descrição:* Atualização do subtítulo no modal inicial de "Aniversário de 5 Anos no Reino dos Unicórnios!" para "Divirta-se no aniversário de 5 anos da Catarina".
+  * *Solução:* Alteração direta no `PlayerSetupModal.tsx` e reflexo nas mensagens do modal de instalação.
+
+### 2. Lições Aprendidas
+* Combinar query parameters (`?install=1`) com a verificação de `window.matchMedia('(display-mode: standalone)')` permite criar experiências de recepção diferenciadas para novos visitantes vindos de QR Codes físicos, sem interferir na experiência de quem já joga com o app instalado.
+
+### 3. Débitos Técnicos
 * **Status:** **ZERO DÉBITOS PENDENTES ✓** (Repositório limpo, 19/19 testes aprovados, build atualizado no GitHub).
