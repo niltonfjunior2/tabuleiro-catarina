@@ -40,7 +40,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ onClose }) => {
         {/* História / Sobre */}
         <div className="bg-pink-50 p-3.5 rounded-2xl border border-pink-200 text-xs text-gray-700 font-medium mb-3 text-left space-y-1.5 w-full leading-relaxed">
           <p className="font-bold text-pink-800 flex items-center gap-1.5 text-xs sm:text-sm">
-            <span>🎁</span> Um Presente para a Catarina
+            <span>🎁</span> Um Presente de Aniversário
           </p>
           <p>
             Este jogo foi idealizado, programado e construído com todo o carinho do mundo pelo <strong>Vovô Nilton</strong> especialmente para comemorar o aniversário de <strong>5 anos da Catarina</strong>.
@@ -66,7 +66,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ onClose }) => {
             <span>🔒</span> Privacidade Mágica
           </p>
           <p>
-            Zero coleta de dados, zero anúncios e zero rastreamento. O jogo funciona 100% no seu aparelho e offline. O único segredo guardado aqui é o amor infinito do Vovô pela Catarina.
+            Zero coleta de dados, zero anúncios e zero rastreamento. O jogo funciona 100% no seu aparelho e offline. O único segredo guardado aqui é a magia da Tecnologia usada pelo Vovô para ver a Catarina Feliz.
           </p>
         </div>
 
