@@ -18,6 +18,8 @@ export default defineConfig({
         background_color: '#fdf2f8',
         display: 'standalone',
         orientation: 'landscape',
+        start_url: '/',
+        scope: '/',
         icons: [
           {
             src: 'assets/icon-192.png',
@@ -35,7 +37,8 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,jpg,webp,svg,mp3,json}'],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
-        skipWaiting: true
+        skipWaiting: true,
+        navigateFallback: 'index.html'
       }
     })
   ],
